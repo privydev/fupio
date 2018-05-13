@@ -135,60 +135,71 @@ export default class Profile extends Component {
       <div className="container text-center">
 
         <div className="row">
-          <div className="col-md-offset-3 col-md-6">
-            <div className="avatar-section">
-                <img
-                  src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
-                  className="img-rounded avatar"
-                  id="avatar-image"
-                />
-                <div className="username">
-                  <h1>
-                    <span id="heading-name">{ person.name() ? person.name()
-                      : 'Nameless Person' }</span>
-                  </h1>
-                  <span>{username}</span>
-                  {this.isLocal() &&
-                    <a onClick={ handleSignOut.bind(this) }>Logout</a>
-                  }
-                </div>
-            </div>
-            
-            <hr />
-
-            {this.isLocal() &&
-              <div className="new-status">
-                <div>
-                  <input className="input-status"
-                    value={this.state.newStatus}
-                    onChange={e => this.handleNewStatusChange(e)}
-                    placeholder="What's on your mind?"
+            <div className="column">
+              <div className="avatar-section">
+                  <img
+                    src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
+                    className="img-rounded avatar"
+                    id="avatar-image"
                   />
-                </div>
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={e => this.handleNewStatusSubmit(e)}
-                  >
-                    Submit
-                  </button>
+                  <div className="username">
+                    <h1>
+                      <span id="heading-name">{ person.name() ? person.name()
+                        : 'Nameless Person' }</span>
+                    </h1>
+                    <span>{username}</span>
+                    {this.isLocal() &&
+                      <a onClick={ handleSignOut.bind(this) }>Logout</a>
+                    }
+                  </div>
+              </div>
+            </div>
+        </div>
+            
+        <hr />
+        
+        
+            {this.isLocal() &&
+              <div className="row">
+                <div className="column">
+                  <div className="new-status">
+                    <div>
+                      <input className="input-status"
+                        value={this.state.newStatus}
+                        onChange={e => this.handleNewStatusChange(e)}
+                        placeholder="What's on your mind?"
+                      />
+                    </div>
+                    <div>
+                      <button
+                        className="btn btn-primary"
+                        onClick={e => this.handleNewStatusSubmit(e)}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
 
             <hr />
-
-            <div className="statuses">
-            {this.state.isLoading && <span>Loading...</span>}
-            {this.state.statuses.map((status) => (
-                <div className="status" key={status.id}>
-                  {status.text}
+            
+            <div className="row">
+              <div className="column">
+                <div className="statuses">
+                {this.state.isLoading && <span>Loading...</span>}
+                {this.state.statuses.map((status) => (
+                    <div className="status" key={status.id}>
+                      {status.text}
+                    </div>
+                    )
+                )}
                 </div>
-                )
-            )}
+              </div>
             </div>
-          </div>
-        </div>
+            
+        
       </div> : null
     );
   }

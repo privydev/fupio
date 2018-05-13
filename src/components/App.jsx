@@ -30,8 +30,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="site-wrapper">
-        <div className="site-wrapper-inner">
+      <div>
           { !isUserSignedIn() ?
             <Signin handleSignIn={ this.handleSignIn } />
             : 
@@ -44,7 +43,6 @@ export default class App extends Component {
               />
             </Switch>
           }
-        </div>
       </div>
     );
   }
