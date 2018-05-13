@@ -132,7 +132,7 @@ export default class Profile extends Component {
 
     return (
       !isSignInPending() && person ?
-      <div className="container">
+      <div className="container text-center">
 
         <div className="row">
           <div className="col-md-offset-3 col-md-6">

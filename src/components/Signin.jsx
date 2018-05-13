@@ -11,11 +11,18 @@ export default class Signin extends Component {
 
     return (
       <div className="container">
-        <h1 className="landing-heading">Fupio</h1>
-        <p>Dead simple microblogging application</p>
-        <button className="action_button" onClick={ handleSignIn.bind(this) }>
-          Sign In with Blockstack
-        </button>
+        <div className="row">
+          <div className="column column-padding-top">
+            <h1 className="logo">Fupio</h1>
+            <p>Dead simple decentralized microblogging application.</p>
+            <button className="action_button" onClick={ handleSignIn.bind(this) }>
+              Sign In with Blockstack
+            </button>
+          </div>
+          <div className="column column-padding-top">
+            <img src="/watermelon.png" />
+          </div>
+        </div>
       </div>
     );
   }

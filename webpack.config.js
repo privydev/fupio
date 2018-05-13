@@ -5,6 +5,9 @@ const webpack = require('webpack');
 // this will allow for the authRequest to see the file at www.example.com/manifest.json
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestAssetPlugin = new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]);
+const PacificoLatin = new CopyWebpackPlugin([ { from: 'src/assets/pacifico-latin.woff2', to: 'pacifico-latin.woff2' } ]);
+const PacificoLatinExt = new CopyWebpackPlugin([ { from: 'src/assets/pacifico-ext.woff2', to: 'pacifico-ext.woff2' } ]);
+const WaterMelon = new CopyWebpackPlugin([ { from: 'src/assets/watermelon.png', to: 'watermelon.png' } ]);
 const IconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/icon-192x192.png', to: 'icon-192x192.png' } ]);
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const UglifyEsPluginConfig = new UglifyEsPlugin({
@@ -35,7 +38,7 @@ module.exports = {
   entry: './src/index.js',
   target: 'web',
   output: {
-    path: path.resolve('public/build'),
+    path: path.resolve('public'),
     filename: 'index_bundle.js',
   },
   devServer: {
@@ -63,8 +66,11 @@ module.exports = {
   },
   plugins: [
 	HtmlWebpackPluginConfig, 
-	ManifestAssetPlugin, 
-	IconAssetPlugin,
+  ManifestAssetPlugin, 
+  PacificoLatin, 
+  PacificoLatinExt,
+  IconAssetPlugin,
+  WaterMelon,
 	UglifyEsPluginConfig
  ]
 }

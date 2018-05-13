@@ -4,7 +4,7 @@
   "description": "Dead simple microblogging application",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "dev": "webpack-dev-server",
     "build": "webpack",
     "deploy": "npm run build && firebase deploy --only hosting"
   },
