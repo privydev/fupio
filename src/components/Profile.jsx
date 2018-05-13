@@ -34,6 +34,8 @@ export default class Profile extends Component {
 
   componentDidMount() {
     this.fetchData()
+
+    console.log(loadUserData().profile)
   }
 
   handleNewStatusChange(event) {
@@ -157,7 +159,7 @@ export default class Profile extends Component {
             {this.isLocal() &&
               <div className="new-status">
                 <div>
-                  <textarea className="input-status"
+                  <input className="input-status"
                     value={this.state.newStatus}
                     onChange={e => this.handleNewStatusChange(e)}
                     placeholder="What's on your mind?"
