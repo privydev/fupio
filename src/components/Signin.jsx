@@ -20,7 +20,7 @@ export default class Signin extends Component {
             </button>
           </div>
           <div className="column column-padding-top">
-            <img src="/watermelon.png" />
+            <img src="/watermelon.png" width="100%"/>
           </div>
         </div>
       </div>

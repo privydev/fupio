@@ -28,14 +28,15 @@ export default class Profile extends Component {
       newStatus: "",
       statuses: [],
       statusIndex: 0,
-      isLoading: false
+      isLoading: false,
+      displayError: false
   	};
   }
 
   componentDidMount() {
     this.fetchData()
 
-    console.log(loadUserData().profile)
+    console.log(loadUserData())
   }
 
   handleNewStatusChange(event) {
@@ -45,10 +46,13 @@ export default class Profile extends Component {
   }
 
   handleNewStatusSubmit(event) {
-    this.saveNewStatus(this.state.newStatus)
-    this.setState({
-      newStatus: ""
-    })
+    if (this.state.newStatus.length>0) {
+      this.saveNewStatus(this.state.newStatus)
+      this.setState({ newStatus: "" })
+      this.setState({ displayError: false })
+    } else {
+      this.setState({ displayError: "Not enough characters" })
+    }
   }
 
   saveNewStatus(statusText) {
@@ -134,34 +138,41 @@ export default class Profile extends Component {
       !isSignInPending() && person ?
       <div className="container text-center">
 
-        <div className="row">
-            <div className="column">
+        <div className="row navigation">
+            <div className="column brand">
+              <h1 className="logo">Fupio</h1>
+            </div>
+            <div className="column profile">
               <div className="avatar-section">
                   <img
                     src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
                     className="img-rounded avatar"
-                    id="avatar-image"
                   />
                   <div className="username">
-                    <h1>
+                    {/* <h1>
                       <span id="heading-name">{ person.name() ? person.name()
                         : 'Nameless Person' }</span>
                     </h1>
-                    <span>{username}</span>
+                    <br /> */}
                     {this.isLocal() &&
-                      <a onClick={ handleSignOut.bind(this) }>Logout</a>
+                      <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
                     }
+                    {/* <small>{username}</small>
+                    <br /> */}
+                    
                   </div>
               </div>
             </div>
         </div>
             
-        <hr />
         
         
             {this.isLocal() &&
               <div className="row">
                 <div className="column">
+                  {this.state.displayError && 
+                    <p className="error">{this.state.displayError}</p>
+                  }
                   <div className="new-status">
                     <div>
                       <input className="input-status"
@@ -179,11 +190,11 @@ export default class Profile extends Component {
                       </button>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             }
 
-            <hr />
             
             <div className="row">
               <div className="column">
