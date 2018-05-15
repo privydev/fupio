@@ -8,15 +8,22 @@ import {
   handlePendingSignIn,
   signUserOut,
 } from 'blockstack';
+import { auth, defaultDatabase } from '../firebase'
 
 import { Switch, Route } from 'react-router-dom'
 
 export default class App extends Component {
 
   constructor(props) {
-  	super(props);
+    super(props);
+    this.state = {
+    }
   }
 
+  componentDidMount(){
+    
+  }
+    
   handleSignIn(e) {
     e.preventDefault();
     const origin = window.location.origin

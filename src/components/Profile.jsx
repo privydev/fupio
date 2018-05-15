@@ -8,6 +8,19 @@ import {
   lookupProfile
 } from 'blockstack';
 
+import { auth, defaultDatabase } from '../firebase'
+
+import TimeAgo from 'javascript-time-ago'
+
+// Load locale-specific relative date/time formatting rules.
+import en from 'javascript-time-ago/locale/en'
+
+// Add locale-specific relative date/time formatting rules.
+TimeAgo.locale(en)
+
+// Create relative date/time formatter.
+const timeAgo = new TimeAgo('en-US')
+
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 const statusFileName = 'statuses.json'
 
@@ -35,8 +48,30 @@ export default class Profile extends Component {
 
   componentDidMount() {
     this.fetchData()
+    
+    let userData = loadUserData()
+    let blockstackIdentityToken = userData.identityAddress
+    auth.signInAnonymously().catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
 
-    console.log(loadUserData())
+    auth.onAuthStateChanged(function(firebaseUser) {
+      if (firebaseUser) {
+        firebaseUser.updateProfile({
+          displayName: blockstackIdentityToken,
+        }).then(function() {
+          console.log(blockstackIdentityToken)
+          // TODO set state here
+        }, function(error) {
+          console.log(error)
+        });
+      } else {
+        console.log("signed out")
+      }
+    });
+
   }
 
   handleNewStatusChange(event) {
@@ -136,37 +171,35 @@ export default class Profile extends Component {
 
     return (
       !isSignInPending() && person ?
-      <div className="container text-center">
+      <div className="container">
 
-        <div className="row navigation">
-            <div className="column brand">
-              <h1 className="logo">Fupio</h1>
-            </div>
-            <div className="column profile">
-              <div className="avatar-section">
-                  <img
-                    src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
-                    className="img-rounded avatar"
-                  />
-                  <div className="username">
-                    {/* <h1>
-                      <span id="heading-name">{ person.name() ? person.name()
-                        : 'Nameless Person' }</span>
-                    </h1>
-                    <br /> */}
-                    {this.isLocal() &&
-                      <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
-                    }
-                    {/* <small>{username}</small>
-                    <br /> */}
-                    
+            <div className="row navigation">
+                <div className="column brand">
+                  <h1 className="logo">Fupio</h1>
+                </div>
+                <div className="column profile">
+                  <div className="avatar-section">
+                      <img
+                        src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
+                        className="img-rounded avatar"
+                      />
+                      <div className="username">
+                        {/* <h1>
+                          <span id="heading-name">{ person.name() ? person.name()
+                            : 'Nameless Person' }</span>
+                        </h1>
+                        <br /> */}
+                        {this.isLocal() &&
+                          <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
+                        }
+                        {/* <small>{username}</small>
+                        <br /> */}
+                        
+                      </div>
                   </div>
-              </div>
+                </div>
             </div>
-        </div>
-            
-        
-        
+
             {this.isLocal() &&
               <div className="row">
                 <div className="column">
@@ -195,14 +228,14 @@ export default class Profile extends Component {
               </div>
             }
 
-            
             <div className="row">
               <div className="column">
                 <div className="statuses">
                 {this.state.isLoading && <span>Loading...</span>}
                 {this.state.statuses.map((status) => (
                     <div className="status" key={status.id}>
-                      {status.text}
+                      <p>{status.text}</p>
+                      <time>{timeAgo.format(status.created_at)}</time>
                     </div>
                     )
                 )}
@@ -210,7 +243,6 @@ export default class Profile extends Component {
               </div>
             </div>
             
-        
       </div> : null
     );
   }

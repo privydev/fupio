@@ -40,7 +40,7 @@ body{color:#505664;font-size: 1.1em}
 
 .hide{display:none;}
 .text-center{text-align: center}
-.error{background-color: #f26964; border-radius:0.2em; padding: 1em }
+.error{background-color: #f26964; color: #fefefe; border-radius:0.2em; padding: 1em }
 
 .logo{font-size: 3em;font-family: 'Pacifico',cursive;font-weight: 400;padding:0;margin:0}
 
@@ -68,7 +68,6 @@ body{color:#505664;font-size: 1.1em}
 .btn:focus,.btn:active:focus,.btn.active:focus{outline:none;}
 .btn-primary{color:#fff;border:none;background-color:#505664;}
 
-
 .action_button {
     background: #f26964;
     color: #fff;
@@ -85,13 +84,7 @@ body{color:#505664;font-size: 1.1em}
     border-radius: 0.2em;
 }
 
-/* .avatar{width:100px;height:100px;}
-.avatar-section{margin-bottom:25px;display:flex;text-align:left;}
-.username{margin-left:20px;} */
-
-
 .panel-authed{padding:0 0 0 0;}
-
 
 input, textarea{
     background: none repeat scroll 0 0 rgba(0,0,0,0.1);
@@ -100,12 +93,13 @@ input, textarea{
     margin-bottom: 10px;
     padding: 1.2em;
     width: 100%;
-
 }
 .input-status{width:100%;height:70px;border-radius:0.2em;font-size:1.2em;border:none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
          box-sizing: border-box;}
 .new-status{text-align:right;}
-.status{color:#2e2e2e;margin:1em 0px;padding:20px;background-color:#fff;border-radius:0.2em}
+.status{color:#2e2e2e;text-align:center;margin:1em 0px;padding:20px;background-color:#fff;border-radius:0.2em}
+.status p{margin: 0;}
+.status time{font-size: 0.8em; margin-top: 0.2em; color: gray}
 
