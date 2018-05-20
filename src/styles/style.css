@@ -54,7 +54,7 @@ body{color:#505664;font-size: 1.1em}
 .column-padding-top{margin-top: 14%}
 
 .navigation .brand {text-align:left !important}
-.navigation .brand .logo{ font-size: 1.9em !important}
+.navigation .brand .logo{ font-size: 2em !important}
 .navigation .profile {text-align:right !important;font-size: 1.1em}
 .navigation .profile .avatar{ border-radius: 50%; height: 2.6em}
 .navigation .profile .username{ font-size: 0.7em}
@@ -94,12 +94,15 @@ input, textarea{
     padding: 1.2em;
     width: 100%;
 }
-.input-status{width:100%;height:70px;border-radius:0.2em;font-size:1.2em;border:none;
+
+.new{text-align:right;}
+.new input{
+    width:100%;height:70px;border-radius:0.2em;font-size:1.2em;border:none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-         box-sizing: border-box;}
-.new-status{text-align:right;}
-.status{color:#2e2e2e;text-align:center;margin:1em 0px;padding:20px;background-color:#fff;border-radius:0.2em}
-.status p{margin: 0;}
-.status time{font-size: 0.8em; margin-top: 0.2em; color: gray}
+         box-sizing: border-box;
+}
+article {color:#2e2e2e;text-align:center;margin:1em 0px;padding:0.6em;background-color:#fff;border-radius:0.2em}
+article p{margin: 0;}
+article time{font-size: 0.8em; margin-top: 0.2em; color: gray}
 
