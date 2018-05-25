@@ -230,16 +230,14 @@ export default class Profile extends Component {
 
             <div className="row">
               <div className="column">
-                <div className="statuses">
                 {this.state.isLoading && <span>Loading...</span>}
                 {this.state.statuses.map((status) => (
-                    <div className="status" key={status.id}>
+                    <article key={status.id}>
                       <p>{status.text}</p>
                       <time>{timeAgo.format(status.created_at)}</time>
-                    </div>
+                    </article>
                     )
                 )}
-                </div>
               </div>
             </div>
             
