@@ -8,8 +8,6 @@ import {
   lookupProfile
 } from 'blockstack';
 
-import { auth, defaultDatabase } from '../firebase'
-
 import TimeAgo from 'javascript-time-ago'
 
 // Load locale-specific relative date/time formatting rules.
@@ -51,26 +49,7 @@ export default class Profile extends Component {
     
     let userData = loadUserData()
     let blockstackIdentityToken = userData.identityAddress
-    auth.signInAnonymously().catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-    });
-
-    auth.onAuthStateChanged(function(firebaseUser) {
-      if (firebaseUser) {
-        firebaseUser.updateProfile({
-          displayName: blockstackIdentityToken,
-        }).then(function() {
-          console.log(blockstackIdentityToken)
-          // TODO set state here
-        }, function(error) {
-          console.log(error)
-        });
-      } else {
-        console.log("signed out")
-      }
-    });
+    console.log(blockstackIdentityToken)
 
   }
 

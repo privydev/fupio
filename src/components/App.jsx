@@ -8,7 +8,6 @@ import {
   handlePendingSignIn,
   signUserOut,
 } from 'blockstack';
-import { auth, defaultDatabase } from '../firebase'
 
 import { Switch, Route } from 'react-router-dom'
 
