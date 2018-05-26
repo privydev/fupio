@@ -9,15 +9,11 @@ import {
 } from 'blockstack';
 
 import TimeAgo from 'javascript-time-ago'
-
-// Load locale-specific relative date/time formatting rules.
 import en from 'javascript-time-ago/locale/en'
-
-// Add locale-specific relative date/time formatting rules.
 TimeAgo.locale(en)
-
-// Create relative date/time formatter.
 const timeAgo = new TimeAgo('en-US')
+
+import Sockette from 'sockette';
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 const statusFileName = 'statuses.json'
@@ -40,16 +36,26 @@ export default class Profile extends Component {
       statuses: [],
       statusIndex: 0,
       isLoading: false,
-      displayError: false
+      displayError: false,
+      ws: new Sockette("ws://127.0.0.1:38746", {
+        timeout: 5e3,
+        maxAttempts: 10,
+        onopen: e => console.log('Connected!', e),
+        onmessage: e => console.log('Received:', e),
+        onreconnect: e => console.log('Reconnecting...', e),
+        onmaximum: e => console.log('Stop Attempting!', e),
+        onclose: e => console.log('Closed!', e),
+        onerror: e => console.log('Error:', e)
+      })
   	};
   }
 
   componentDidMount() {
     this.fetchData()
     
-    let userData = loadUserData()
-    let blockstackIdentityToken = userData.identityAddress
-    console.log(blockstackIdentityToken)
+    // let userData = loadUserData()
+    // let blockstackIdentityToken = userData.identityAddress
+    // console.log(blockstackIdentityToken)
 
   }
 
@@ -67,6 +73,9 @@ export default class Profile extends Component {
     } else {
       this.setState({ displayError: "Not enough characters" })
     }
+
+    this.state.ws.send({ type: 99, data: {} });
+    console.log("zaaa")
   }
 
   saveNewStatus(statusText) {
@@ -152,11 +161,11 @@ export default class Profile extends Component {
       !isSignInPending() && person ?
       <div className="container">
 
-            <div className="row navigation">
-                <div className="column brand">
+            <div className="grid navigation">
+                <div className="cell -3of12 brand">
                   <h1 className="logo">Fupio</h1>
                 </div>
-                <div className="column profile">
+                <div className="cell -9of12 profile">
                   <div className="avatar-section">
                       <img
                         src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
@@ -180,8 +189,8 @@ export default class Profile extends Component {
             </div>
 
             {this.isLocal() &&
-              <div className="row">
-                <div className="column">
+              <div className="grid">
+                <div className="cell -12of12">
                   {this.state.displayError && 
                     <p className="error">{this.state.displayError}</p>
                   }
@@ -195,20 +204,19 @@ export default class Profile extends Component {
                     </div>
                     <div>
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-primary -right"
                         onClick={e => this.handleNewStatusSubmit(e)}
                       >
                         Submit
                       </button>
                     </div>
                   </div>
-                  
                 </div>
               </div>
             }
 
-            <div className="row">
-              <div className="column">
+            <div className="grid">
+              <div className="cell -12of12">
                 {this.state.isLoading && <span>Loading...</span>}
                 {this.state.statuses.map((status) => (
                     <article key={status.id}>
