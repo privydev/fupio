@@ -74,7 +74,7 @@ export default class Profile extends Component {
       this.setState({ displayError: "Not enough characters" })
     }
 
-    this.state.ws.send({ type: 99, data: {} });
+    this.state.ws.json({ type: 99, data: {} });
     console.log("zaaa")
   }
 
@@ -161,40 +161,37 @@ export default class Profile extends Component {
       !isSignInPending() && person ?
       <div className="container">
 
-            <div className="grid navigation">
-                <div className="cell -3of12 brand">
+            <div className="row navigation">
+              <div className="col col-third brand">
                   <h1 className="logo">Fupio</h1>
-                </div>
-                <div className="cell -9of12 profile">
-                  <div className="avatar-section">
-                      <img
-                        src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
-                        className="img-rounded avatar"
-                      />
-                      <div className="username">
-                        {/* <h1>
-                          <span id="heading-name">{ person.name() ? person.name()
-                            : 'Nameless Person' }</span>
-                        </h1>
-                        <br /> */}
-                        {this.isLocal() &&
-                          <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
-                        }
-                        {/* <small>{username}</small>
-                        <br /> */}
-                        
-                      </div>
-                  </div>
-                </div>
+              </div>
+              <div className="col profile text-right">
+                    <img
+                          src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
+                          className="img-rounded avatar"
+                    />
+                    <div className="username">
+                          {/* <h1>
+                            <span id="heading-name">{ person.name() ? person.name()
+                              : 'Nameless Person' }</span>
+                          </h1>
+                          <br /> */}
+                          {this.isLocal() &&
+                            <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
+                          }
+                          {/* <small>{username}</small>
+                          <br /> */}      
+                    </div>
+              </div>
             </div>
 
+
             {this.isLocal() &&
-              <div className="grid">
-                <div className="cell -12of12">
+              <div>
                   {this.state.displayError && 
                     <p className="error">{this.state.displayError}</p>
                   }
-                  <div className="new-status">
+                  <div className="right">
                     <div>
                       <input className="input-status"
                         value={this.state.newStatus}
@@ -204,19 +201,17 @@ export default class Profile extends Component {
                     </div>
                     <div>
                       <button
-                        className="btn btn-primary -right"
+                        className="btn btn-primary right"
                         onClick={e => this.handleNewStatusSubmit(e)}
                       >
                         Submit
                       </button>
                     </div>
                   </div>
-                </div>
               </div>
             }
 
-            <div className="grid">
-              <div className="cell -12of12">
+            <div>
                 {this.state.isLoading && <span>Loading...</span>}
                 {this.state.statuses.map((status) => (
                     <article key={status.id}>
@@ -225,7 +220,6 @@ export default class Profile extends Component {
                     </article>
                     )
                 )}
-              </div>
             </div>
             
       </div> : null
