@@ -187,7 +187,7 @@ export default class Profile extends Component {
 
 
             {this.isLocal() &&
-              <div>
+              <div className="new">
                   {this.state.displayError && 
                     <p className="error">{this.state.displayError}</p>
                   }
