@@ -16,7 +16,7 @@ const timeAgo = new TimeAgo('en-US')
 import Sockette from 'sockette';
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
-const statusFileName = 'statuses.json'
+const feedFileName = 'feeds-test.json'
 
 export default class Profile extends Component {
   constructor(props) {
@@ -32,16 +32,16 @@ export default class Profile extends Component {
   	  	},
   	  },
       username: "",
-      newStatus: "",
-      statuses: [],
-      statusIndex: 0,
+      newFeed: "",
+      feeds: [],
+      feedIndex: 0,
       isLoading: false,
       displayError: false,
       ws: new Sockette("ws://127.0.0.1:38746", {
         timeout: 5e3,
         maxAttempts: 10,
         onopen: e => console.log('Connected!', e),
-        onmessage: e => console.log('Received:', e),
+        onmessage: e => console.log('Received:', {type: e.type, data: e.data}),
         onreconnect: e => console.log('Reconnecting...', e),
         onmaximum: e => console.log('Stop Attempting!', e),
         onclose: e => console.log('Closed!', e),
@@ -53,46 +53,45 @@ export default class Profile extends Component {
   componentDidMount() {
     this.fetchData()
     
-    // let userData = loadUserData()
-    // let blockstackIdentityToken = userData.identityAddress
-    // console.log(blockstackIdentityToken)
-
+    let userData = loadUserData()
+    console.log(userData)
+    let blockstackIdentityToken = userData.identityAddress;
+    console.log(blockstackIdentityToken)
   }
 
-  handleNewStatusChange(event) {
+  handleNewFeedChange(event) {
     this.setState({
-      newStatus: event.target.value
+      newFeed: event.target.value
     })
   }
 
-  handleNewStatusSubmit(event) {
-    if (this.state.newStatus.length>0) {
-      this.saveNewStatus(this.state.newStatus)
-      this.setState({ newStatus: "" })
+  handleNewFeedSubmit(event) {
+    if (this.state.newFeed.length>0) {
+      this.saveNewFeed(this.state.newFeed)
+      this.setState({ newFeed: "" })
       this.setState({ displayError: false })
     } else {
       this.setState({ displayError: "Not enough characters" })
     }
 
-    this.state.ws.json({ type: 99, data: {} });
-    console.log("zaaa")
+    this.state.ws.json({ type: 'get_blockchain'});
   }
 
-  saveNewStatus(statusText) {
-    let statuses = this.state.statuses
+  saveNewFeed(feedText) {
+    let feeds = this.state.feeds
 
-    let status = {
-      id: this.state.statusIndex++,
-      text: statusText.trim(),
+    let feed = {
+      id: this.state.feedIndex++,
+      text: feedText.trim(),
       created_at: Date.now()
     }
 
-    statuses.unshift(status)
+    feeds.unshift(feed)
     const options = { encrypt: false }
-    putFile(statusFileName, JSON.stringify(statuses), options)
+    putFile(feedFileName, JSON.stringify(feeds), options)
       .then(() => {
         this.setState({
-          statuses: statuses
+          feeds: feeds
         })
       })
   }
@@ -101,14 +100,14 @@ export default class Profile extends Component {
     if (this.isLocal()) {
       this.setState({ isLoading: true })
       const options = { decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/' }
-      getFile(statusFileName, options)
+      getFile(feedFileName, options)
         .then((file) => {
-          var statuses = JSON.parse(file || '[]')
+          var feeds = JSON.parse(file || '[]')
           this.setState({
             person: new Person(loadUserData().profile),
             username: loadUserData().username,
-            statusIndex: statuses.length,
-            statuses: statuses,
+            feedIndex: feeds.length,
+            feeds: feeds,
           })
         })
         .finally(() => {
@@ -131,16 +130,16 @@ export default class Profile extends Component {
 
       const options = { username: username, decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/'}
 
-      getFile(statusFileName, options)
+      getFile(feedFileName, options)
         .then((file) => {
-          var statuses = JSON.parse(file || '[]')
+          var feeds = JSON.parse(file || '[]')
           this.setState({
-            statusIndex: statuses.length,
-            statuses: statuses
+            feedIndex: feeds.length,
+            feeds: feeds
           })
         })
         .catch((error) => {
-          console.log('could not fetch statuses')
+          console.log('could not fetch feeds')
         })
         .finally(() => {
           this.setState({ isLoading: false })
@@ -162,7 +161,7 @@ export default class Profile extends Component {
       <div className="container">
 
             <div className="row navigation">
-              <div className="col col-third brand">
+              <div className="col brand">
                   <h1 className="logo">Fupio</h1>
               </div>
               <div className="col profile text-right">
@@ -193,16 +192,16 @@ export default class Profile extends Component {
                   }
                   <div className="right">
                     <div>
-                      <input className="input-status"
-                        value={this.state.newStatus}
-                        onChange={e => this.handleNewStatusChange(e)}
+                      <input className="input-feed"
+                        value={this.state.newFeed}
+                        onChange={e => this.handleNewFeedChange(e)}
                         placeholder="What's on your mind?"
                       />
                     </div>
                     <div>
                       <button
                         className="btn btn-primary right"
-                        onClick={e => this.handleNewStatusSubmit(e)}
+                        onClick={e => this.handleNewFeedSubmit(e)}
                       >
                         Submit
                       </button>
@@ -213,10 +212,10 @@ export default class Profile extends Component {
 
             <div>
                 {this.state.isLoading && <span>Loading...</span>}
-                {this.state.statuses.map((status) => (
-                    <article key={status.id}>
-                      <p>{status.text}</p>
-                      <time>{timeAgo.format(status.created_at)}</time>
+                {this.state.feeds.map((feed) => (
+                    <article key={feed.id}>
+                      <p>{feed.text}</p>
+                      <time>{timeAgo.format(feed.created_at)}</time>
                     </article>
                     )
                 )}
