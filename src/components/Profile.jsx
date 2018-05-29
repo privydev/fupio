@@ -16,14 +16,15 @@ const timeAgo = new TimeAgo('en-US')
 import Sockette from 'sockette';
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
-const feedFileName = 'feeds-test.json'
+const feedFileName = 'fupio-feeds-test.json';
+const profileFileName = 'fupio-profile-test.json';
 
 export default class Profile extends Component {
   constructor(props) {
   	super(props);
 
   	this.state = {
-  	  person: {
+      person: {
   	  	name() {
           return 'Anonymous';
         },
@@ -32,43 +33,57 @@ export default class Profile extends Component {
   	  	},
   	  },
       username: "",
-      newFeed: "",
+      newFeedText: "",
       feeds: [],
       feedIndex: 0,
       isLoading: false,
       displayError: false,
-      ws: new Sockette("ws://127.0.0.1:38746", {
-        timeout: 5e3,
-        maxAttempts: 10,
-        onopen: e => console.log('Connected!', e),
-        onmessage: e => console.log('Received:', {type: e.type, data: e.data}),
-        onreconnect: e => console.log('Reconnecting...', e),
-        onmaximum: e => console.log('Stop Attempting!', e),
-        onclose: e => console.log('Closed!', e),
-        onerror: e => console.log('Error:', e)
-      })
+      ws: null,
   	};
   }
-
+  initConnection(identity) {
+    const url = `ws://127.0.0.1:38746?token=${identity}`;
+    const wsConnection = new Sockette(url, {
+      timeout: 5e3,
+      maxAttempts: 10,
+      onopen: e => console.log('Connected!', e),
+      onmessage: e => console.log('Received:', {type: e.type, data: e.data}),
+      onreconnect: e => console.log('Reconnecting...', e),
+      onmaximum: e => console.log('Stop Attempting!', e),
+      onclose: e => console.log('Closed!', e),
+      onerror: e => console.log('Error:', e)
+    });
+    this.setState({ws: wsConnection});
+  }
   componentDidMount() {
-    this.fetchData()
-    
+    // this.fetchData()
+
     let userData = loadUserData()
-    console.log(userData)
-    let blockstackIdentityToken = userData.identityAddress;
-    console.log(blockstackIdentityToken)
+    this.loadProfile(userData)
+    this.initConnection(userData.identityAddress);
   }
 
-  handleNewFeedChange(event) {
+  loadProfile(userData) {
+    console.log(userData)
+  }
+
+  handleNewFeedTextChange(event) {
     this.setState({
-      newFeed: event.target.value
+      newFeedText: event.target.value
+    })
+  }
+
+  handleNewFeedTagChange(event) {
+    this.setState({
+      newFeedTags: event.target.value
     })
   }
 
   handleNewFeedSubmit(event) {
-    if (this.state.newFeed.length>0) {
-      this.saveNewFeed(this.state.newFeed)
-      this.setState({ newFeed: "" })
+    if (this.state.newFeedText.length>0) {
+      this.saveNewFeed(this.state.newFeedText, this.state.newFeedTags)
+      this.setState({ newFeedText: "" })
+      this.setState({ newFeedTags: "" })
       this.setState({ displayError: false })
     } else {
       this.setState({ displayError: "Not enough characters" })
@@ -77,12 +92,13 @@ export default class Profile extends Component {
     this.state.ws.json({ type: 'get_blockchain'});
   }
 
-  saveNewFeed(feedText) {
+  saveNewFeed(feedText, feedTags) {
     let feeds = this.state.feeds
 
     let feed = {
       id: this.state.feedIndex++,
       text: feedText.trim(),
+      tags: feedTags.split(','),
       created_at: Date.now()
     }
 
@@ -94,6 +110,8 @@ export default class Profile extends Component {
           feeds: feeds
         })
       })
+    delete feed['text'];
+    this.state.ws.json({ type: 'add_feed', data: feed});
   }
 
   fetchData() {
@@ -165,21 +183,13 @@ export default class Profile extends Component {
                   <h1 className="logo">Fupio</h1>
               </div>
               <div className="col profile text-right">
-                    <img
-                          src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
+                    <img src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
                           className="img-rounded avatar"
                     />
                     <div className="username">
-                          {/* <h1>
-                            <span id="heading-name">{ person.name() ? person.name()
-                              : 'Nameless Person' }</span>
-                          </h1>
-                          <br /> */}
                           {this.isLocal() &&
                             <a href="#" onClick={ handleSignOut.bind(this) }>Logout</a>
-                          }
-                          {/* <small>{username}</small>
-                          <br /> */}      
+                          }   
                     </div>
               </div>
             </div>
@@ -192,10 +202,13 @@ export default class Profile extends Component {
                   }
                   <div className="right">
                     <div>
-                      <input className="input-feed"
-                        value={this.state.newFeed}
-                        onChange={e => this.handleNewFeedChange(e)}
+                      <input value={this.state.newFeedText}
+                        onChange={e => this.handleNewFeedTextChange(e)}
                         placeholder="What's on your mind?"
+                      />
+                      <input value={this.state.newFeedTags}
+                        onChange={e => this.handleNewFeedTagChange(e)}
+                        placeholder="Tags, here.."
                       />
                     </div>
                     <div>
@@ -211,14 +224,16 @@ export default class Profile extends Component {
             }
 
             <div>
-                {this.state.isLoading && <span>Loading...</span>}
+                {this.state.isLoading && <center>Loading...</center>}
                 {this.state.feeds.map((feed) => (
                     <article key={feed.id}>
                       <p>{feed.text}</p>
+                      {feed.tags && 
+                        <p>{feed.tags}</p>
+                      }
                       <time>{timeAgo.format(feed.created_at)}</time>
                     </article>
-                    )
-                )}
+                ))}
             </div>
             
       </div> : null
