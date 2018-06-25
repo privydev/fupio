@@ -1,0 +1,59 @@
+.header {
+	height: 4em;
+	font-size: 1em;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #9BD6B8;
+	z-index: 111;
+
+	section {
+		margin:0 auto;
+	}
+
+	h1 {
+		float: left;
+		font-size: 2.4em;
+		line-height: 56px;
+		font-weight: 400;
+	}
+
+	nav {
+		float:right;
+		a {
+			line-height:4em;
+			padding: 0 0.5em;
+			height: 1em;
+			min-width: 2.6em;
+			text-decoration: none;
+		}
+		
+	}
+
+	.icon {
+		font-size: 1.4em;
+		margin-left: 0.3em;
+	}
+
+	// form{
+	// 	display: inline;
+
+	// 	.search {
+	// 		width: 5em;
+	// 		padding: 0.6em;
+	// 		border: none;
+	// 		background: none repeat scroll 0 0 rgba(0,0,0,.1);
+	// 		color: #333;
+	// 		font-size: inherit;
+	// 		border-radius: 5px;
+
+	// 		// &:focus {
+	// 		// 	width: 9em;
+	// 		// }
+	// 	}
+	// }
+	
+}
+
+

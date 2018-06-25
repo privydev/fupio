@@ -1,46 +1,71 @@
 {
-  "name": "fupio",
-  "version": "0.0.1",
-  "description": "Dead simple microblogging application",
-  "main": "index.js",
-  "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack",
-    "deploy": "npm run build && firebase deploy --only hosting"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mehmetkose/fupio.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mehmetkose/fupio/issues"
-  },
-  "homepage": "https://github.com/mehmetkose/fupio#readme",
-  "author": "",
+  "name": "crux",
+  "version": "1.0.0",
+  "description": "Preact/Gulp/Rollup Starter",
+  "author": "Eli Smith <dwightsmth@gmail.com> (imelismith.github.io)",
   "license": "MIT",
+  "gulp_config": {
+    "server_port": 8080,
+    "src_path": "./src",
+    "build_path": "./dist",
+    "build_name": "Fupio"
+  },
+  "scripts": {
+    "lint": "NODE_ENV=test ./node_modules/.bin/gulp lint",
+    "test": "NODE_ENV=test ./node_modules/.bin/gulp test",
+    "dev": "NODE_ENV=development ./node_modules/.bin/gulp",
+    "build": "NODE_ENV=production ./node_modules/.bin/gulp",
+    "deploy": "firebase deploy --only hosting"
+  },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^6.4.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.0",
-    "file-loader": "^0.11.1",
-    "html-webpack-plugin": "^2.28.0",
-    "json-loader": "^0.5.4",
-    "path": "^0.12.7",
-    "style-loader": "^0.16.1",
-    "uglify-es-webpack-plugin": "^0.10.0",
-    "url-loader": "^0.5.8",
-    "webpack": "^2.3.3",
-    "webpack-dev-server": "^2.4.2"
+    "autoprefixer": "^6.5.3",
+    "babel-core": "^6.20.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-react-jsx": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "browser-sync": "^2.18.2",
+    "cssnano": "^3.10.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-changed": "^2.0.0",
+    "gulp-file-include": "^1.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "node-notifier": "^5.0.2",
+    "rollup": "^0.41.4",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rucksack-css": "^0.9.1"
   },
   "dependencies": {
-    "blockstack": "^0.17.1",
-    "firebase": "^5.0.2",
-    "javascript-time-ago": "^1.0.30",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-router-dom": "^4.2.2"
+    "hot-ranking": "^1.0.0",
+    "preact": "^8.2.0",
+    "preact-markdown": "^0.4.0",
+    "preact-router": "^2.6.1",
+    "preact-timeago": "^1.0.8",
+    "preact-token-input": "^0.3.0",
+    "sockette": "^2.0.0",
+    "timeago.js": "2.0.3"
+  },
+  "keywords": [
+    "preact",
+    "gulp",
+    "starter",
+    "boilerplate",
+    "babel",
+    "rollup"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imelismith/crux"
   }
 }

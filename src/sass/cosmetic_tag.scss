@@ -1,0 +1,27 @@
+.feed, tags {
+    button.tag, a.tag{
+        background:#7aa991;
+        color:#fff;
+        text-shadow:1px 1px 0 rgba(0,0,0,.1);
+        box-shadow:0 3px 0 #7c9285;
+        font-size: 0.9em;
+        margin: 0.2em;
+        padding: 0.2em 0.5em;
+        border-radius: 0.2em;
+    
+        &:disabled{
+            opacity: 0.7;
+            box-shadow: none !important;
+        }
+    }
+}
+tags {
+    display: block;
+    margin-top: 0.4em;
+    margin-bottom: 0.5em;
+    // text-align: center;
+    
+    .tag{
+        box-shadow: none !important;
+    }
+}
