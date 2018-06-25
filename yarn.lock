@@ -4889,9 +4889,11 @@ preact-router@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-2.6.1.tgz#eec60a9f2c07a1ae4fbc6604d8a0415742fbbd89"
 
-preact-timeago@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/preact-timeago/-/preact-timeago-1.0.8.tgz#5b005e1fb77a13080b69f61b566b28f2373b77e2"
+"preact-timeago@github:fupio/preact-timeago":
+  version "1.0.9"
+  resolved "https://codeload.github.com/fupio/preact-timeago/tar.gz/548971fea28d5e21c5675424c1b5e415b793d100"
+  dependencies:
+    timeago.js "==2.0.3"
 
 preact-token-input@^0.3.0:
   version "0.3.0"
@@ -6001,7 +6003,7 @@ time-stamp@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
 
-timeago.js@2.0.3:
+timeago.js@==2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/timeago.js/-/timeago.js-2.0.3.tgz#1a5fa3208d65b33316f4aeaa2f9aacb24c720762"
 

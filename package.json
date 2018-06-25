@@ -51,10 +51,9 @@
     "preact": "^8.2.0",
     "preact-markdown": "^0.4.0",
     "preact-router": "^2.6.1",
-    "preact-timeago": "^1.0.8",
+    "preact-timeago": "github:fupio/preact-timeago",
     "preact-token-input": "^0.3.0",
-    "sockette": "^2.0.0",
-    "timeago.js": "2.0.3"
+    "sockette": "^2.0.0"
   },
   "keywords": [
     "preact",

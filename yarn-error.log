@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn dev
+  /usr/local/bin/node /usr/local/bin/yarn remove github:fupio/preact-timeago
 
 PATH: 
-  /Users/mks/Library/Android/sdk/tools:/Users/mks/Library/Android/sdk/platform-tools:/Users/mks/dev/flutter/bin:/Library/TeX/texbin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/Users/mks/node_modules/.bin:/Volumes/EVO120/dev/gitlab/fupio/node_modules/.bin
+  /Users/mks/Library/Android/sdk/tools:/Users/mks/Library/Android/sdk/platform-tools:/Users/mks/dev/flutter/bin:/Library/TeX/texbin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/Volumes/EVO120/dev/deploy/fupio/node_modules/.bin
 
 Yarn version: 
   1.5.1
@@ -67,10 +67,9 @@ npm manifest:
       "preact": "^8.2.0",
       "preact-markdown": "^0.4.0",
       "preact-router": "^2.6.1",
-      "preact-timeago": "^1.0.8",
+      "preact-timeago": "github:fupio/preact-timeago",
       "preact-token-input": "^0.3.0",
-      "sockette": "^2.0.0",
-      "timeago.js": "2.0.3"
+      "sockette": "^2.0.0"
     },
     "keywords": [
       "preact",
@@ -4981,9 +4980,11 @@ Lockfile:
     version "2.6.1"
     resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-2.6.1.tgz#eec60a9f2c07a1ae4fbc6604d8a0415742fbbd89"
   
-  preact-timeago@^1.0.8:
+  "preact-timeago@github:fupio/preact-timeago":
     version "1.0.8"
-    resolved "https://registry.yarnpkg.com/preact-timeago/-/preact-timeago-1.0.8.tgz#5b005e1fb77a13080b69f61b566b28f2373b77e2"
+    resolved "https://codeload.github.com/fupio/preact-timeago/tar.gz/e3e8dfe7da2b1ed4f8d77d10fbd091ddef0c6a1f"
+    dependencies:
+      timeago.js "==2.0.3"
   
   preact-token-input@^0.3.0:
     version "0.3.0"
@@ -6093,7 +6094,7 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
   
-  timeago.js@2.0.3:
+  timeago.js@==2.0.3:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/timeago.js/-/timeago.js-2.0.3.tgz#1a5fa3208d65b33316f4aeaa2f9aacb24c720762"
   
@@ -6604,16 +6605,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  Error: Command failed.
-  Exit signal: SIGTERM
-  Command: sh
-  Arguments: -c NODE_ENV=development ./node_modules/.bin/gulp
-  Directory: /Volumes/EVO120/dev/gitlab/fupio
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
-      at ChildProcess.emit (events.js:180:13)
-      at maybeClose (internal/child_process.js:936:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+  Error: This module isn't specified in a manifest.
+      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:60445:15)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>
