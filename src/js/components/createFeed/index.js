@@ -1,15 +1,19 @@
 import { h, Component } from 'preact';
 
 import TokenInput from 'preact-token-input';
+import readAndCompressImage from 'browser-image-resizer'
 
-const { putFile } = window.blockstack;
+import Loading from '../loading';
+
+const { putFile, getFile } = window.blockstack;
 
 export default class CreateFeed extends Component {
     constructor(props){
         super(props)
         this.state = {
             tags: [],
-            text: ""
+            text: "",
+            image: null
         }
     }
     onChangeTags = (event) => {
@@ -25,15 +29,17 @@ export default class CreateFeed extends Component {
             comments: [],
             rating: null,
             tags: this.state.tags,
+            image: this.state.image,
             created: Date.now(),
             identity: this.props.user.identityAddress
         };
         this.saveFeed(feed);
         this.saveRelation(feed);
-        this.setState({tags:[], text:""})
+        this.setState({tags:[], text:"", image: null})
     }
     saveFeed = (feed) => {
-		putFile(`${feed.created}-${feed.identity}.json`, JSON.stringify(feed), {encrypt: false})
+        const options = {username: this.props.user.username, app: this.props.address, encrypt: false};
+		putFile(`${feed.created}-${feed.identity}.json`, JSON.stringify(feed), options)
         .then(() => {
             this.props.ws.json({type: 'add_feed', data: feed});
             feed.tags.map((tag) => {
@@ -53,9 +59,47 @@ export default class CreateFeed extends Component {
         .then(() => {
             this.props.updateMainState({ isLoading: false})
         });
-	}
-    render() {
-        const {text, tags} = this.state;
+    }
+    handleFileSelect = (event) => {
+        const cls = this;
+        const file = event.target.files[0];
+        const config = {
+            quality: 0.5,
+            maxWidth: 1280,
+            maxHeight: 720,
+            autoRotate: true,
+            debug: true,
+        }
+        readAndCompressImage(file, config).then(resizedImage => {
+            cls.setState({imageLoading: true})
+            
+            let base64data = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+            const reader = new FileReader();
+            reader.readAsDataURL(resizedImage);
+            reader.onloadend = function() {
+                base64data = reader.result;
+
+                const newImageFile = {
+                    name: `${cls.props.user.identityAddress}_${Date.now()}_image.json`,
+                    size: resizedImage.size,
+                    type: resizedImage.type,
+                    origin: file.name,
+                    base64: base64data
+                }
+                const options = {username: cls.props.user.username, app: cls.props.address, decrypt: false};
+                putFile(newImageFile.name, JSON.stringify(newImageFile), options).then(() => {
+                    cls.setState({imageLoading: false, image: newImageFile})
+                    console.log(newImageFile)
+                    // getFile(newImageFile.name, {encrypt: false})
+                    // .then((fileContents) => {
+                    //     console.log(fileContents);
+                    // });
+                });
+            }
+        })
+
+    }
+    render({},{text, tags, imageLoading}) {
         return (
             <div class="createFeed">
                 <form action="javascript:" onSubmit={this.onSubmitFeed}>
@@ -64,7 +108,20 @@ export default class CreateFeed extends Component {
                         autocomplete="off" required="required" />
                     <TokenInput value={tags} onChange={this.onChangeTags} placeholder='tags, here, like, this' 
                         autocomplete={"off"} />
-                    <input type="submit" value="send"/>
+                    
+                    <div class="row">
+                        <div class="col imageUpload">
+                            <input onChange={this.handleFileSelect} type="file" accept="image/*" />
+                        </div>
+                        <div class="col">
+                            {!imageLoading && 
+                                <input type="submit" value="send" />
+                            }
+                            {imageLoading && 
+                                <center><Loading /></center>
+                            }
+                        </div>
+                    </div>
                 </form>
             </div>
         );

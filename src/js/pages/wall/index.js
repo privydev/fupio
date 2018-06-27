@@ -23,7 +23,7 @@ export default class Wall extends Component {
 	}
 	loadWall = () => {
 		let tags = [ this.state.slug ];
-		if (window.location.pathname.length == 0) {
+		if (window.location.pathname.length <= 1) {
 			tags = this.props.userSettings.tags
 		}
 		this.props.updateMainState({ feeds: {}, initialWallLoad: true });
@@ -41,7 +41,7 @@ export default class Wall extends Component {
 						
 						{userSettings.tags.length <= tagCount && profileLoaded &&
 							<div>
-								<h3>Follow the tags which you interests.</h3>
+								<h3>Follow at least <strong>7</strong> tags which you interests.</h3>
 								<Onboarding {...this.props} />
 							</div>
 						}
@@ -59,10 +59,10 @@ export default class Wall extends Component {
 						{user && !user.username && 
 							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
 								<content>
-									You're in the <strong>restricted</strong> mode. 
+									You're in the <strong>restrict</strong> mode. 
 									Because you don't have any 
 									<strong> <a target="_blank" href="http://localhost:8888/profiles/i/all">Blockstack ID</a></strong>. 
-									You can <strong>like</strong> feeds, <strong>follow</strong> the tags, but unfortunately you <strong>can't </strong>
+									You can <strong>follow</strong> the tags, but unfortunately you <strong>can't </strong>
 									create feeds or reply for now. 
 									You can get an ID <strong><a target="_blank" href="http://localhost:8888/profiles/i/all">here</a></strong> if you wish.
 								</content>
@@ -72,6 +72,14 @@ export default class Wall extends Component {
 						{Object.values(this.props.feeds).sort((f1, f2) => f2.rank - f1.rank).map(
 							feed => <Feed {...feed} {...this.props} />
 						) }
+
+						{Object.keys(this.props.feeds).length == 0 && 
+							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
+								<content>
+									Seems like this no one created a feed with this tag yet.
+								</content>
+							</div>
+						}
 					</div>
 					<Footer {...this.props} />
 				</div>

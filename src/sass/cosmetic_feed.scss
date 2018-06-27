@@ -12,9 +12,13 @@
 
     content {
       min-height: 2em;
+
+      & > img {
+        height: 15em;
+      }
     }
   
-    img {
+    .profileImage {
         float: left;
         margin-right: .7em;
         width: 60px;
@@ -37,10 +41,12 @@
       & > span{
         margin-right: 0.2em !important;
 
-        a{
-          opacity: .7;
-          font-size: 1em;
-        }
+        
+      }
+
+      a, time{
+        opacity: .7;
+        font-size: 1em;
       }
     }
 

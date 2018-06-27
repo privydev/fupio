@@ -21,10 +21,11 @@ export default class App extends Component {
 			wsConnected: false,
 			user: null,
 			suggested: [
+				'Blockstack', 'Fupio', 'Blockchain',
 				'Movies', 'Geek', 'Technology',
-				'Science & Nature','Food & Drink', 'Books',
-				'Gardening',  'Illustrations & Posters', 'Products', 
-				'Travel', 'Photography', 'Design', 'Music', 'DIY & Crafts', 
+				'Science', 'Nature','Food', 'Drink', 'Books',
+				'Gardening',  'Illustrations', 'Posters', 'Products', 
+				'Travel', 'Photography', 'Design', 'Music', 'DIY', 'Crafts', 
 				'Tattoos', 'Education'
 			],
 			address: window.location.origin.replace("https", "http"),
@@ -133,11 +134,13 @@ export default class App extends Component {
 					// clone the feeds
 					let feedsSnapShot = this.state.feeds;
 					let newFeed = feedsSnapShot[`${feed.created}-${feed.identity}`];
+					
 					// update the data
 					if (newFeed) {
 						newFeed.resolved = true;
 						newFeed.username = feedContent.username;
 						newFeed.text = feedContent.text;
+						newFeed.image = feedContent.image;
 						newFeed.likes = feedContent.likes;
 						newFeed.rating = feedContent.rating;
 						// replace feeds

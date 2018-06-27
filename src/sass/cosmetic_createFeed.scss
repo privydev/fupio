@@ -4,9 +4,9 @@
       padding: 0.5em;
       box-shadow: 0 1px 1px #80888f;
       
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
+      -webkit-border-radius: 0.2em;
+      -moz-border-radius: 0.2em;
+      border-radius: 0.2em;
     
       form {
         textarea {
@@ -14,6 +14,13 @@
           
           &:focus {
             height: 8em;
+          }
+        }
+
+        .imageUpload{
+          margin-right: 0;
+          @include lg {
+            margin-right: 0.5em;
           }
         }
       }

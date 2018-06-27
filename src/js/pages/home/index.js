@@ -1,6 +1,9 @@
 import { h, Component } from 'preact';
 
 import Footer from '../../components/footer';
+import Loading from '../../components/loading';
+
+const { redirectToSignIn } = window.blockstack;
 
 export default class Default extends Component {
 	constructor(props){
@@ -17,11 +20,13 @@ export default class Default extends Component {
 			this.setState({codeConfirmed: true})
 		}
 	}
-	componentDidMount(){
-		console.log(this.props)
-	}
+	handleSignIn = (e) => {
+		e.preventDefault();
+		this.setState({clickedLogin: true})
+		const origin = window.location.origin;
+		redirectToSignIn(origin, origin + '/manifest.json', ['store_write', 'publish_data'])
+	};
 	render() {
-		const { handleSignIn } = this.props;
 		return (
 			<div class="container">
 				<div class="index">
@@ -30,8 +35,8 @@ export default class Default extends Component {
 							<h1 class="logo">Fupio</h1>
 							<h2>Dead simple decentralized microblogging application.</h2>
 							{this.state.codeConfirmed &&
-								<button class="action red" onClick={ handleSignIn.bind(this) }>
-									Sign In with Blockstack
+								<button class="action red" onClick={ this.handleSignIn }>
+								{!this.state.clickedLogin ? "Sign In with Blockstack" : <Loading />}
 								</button>
 							}
 							{!this.state.codeConfirmed &&

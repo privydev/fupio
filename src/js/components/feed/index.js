@@ -25,12 +25,16 @@ export default class Feed extends Component {
         let newCommentText = this.state.commentFormOpen ? comment_button_clicked : comment_button;
         this.setState({commentFormOpen: commentFormStatus, commentText: newCommentText});
     }
-    render({identity, created, username, text, comments, tags}, {}) {
+    openImage = () => {
+        window.open(this.props.image.base64, "title here", "width=400, height=300");
+        return false;
+    }
+    render({identity, created, username, text, comments, tags, image}, {}) {
         return (
             <div style="margin: 1.67em auto">
                 <div class="feed">
                     <a href="javascript:">
-                        <img onError={(e)=>{e.target.src="/profile.png"}} 
+                        <img class="profileImage" onError={(e)=>{e.target.src="/profile.png"}} 
                             src={`https://gaia.blockstack.org/hub/${identity}//avatar-0`} />
                     </a>
                     <content>
@@ -41,16 +45,21 @@ export default class Feed extends Component {
                             }
                         </a>
                         {text ? <p>{text}</p> : <Loading />}
+                        {image && image.name &&
+                            <img src={image.base64} title={image.origin} />
+                        }
                     </content>
                     <hr />
                     <actions>
                         <span>
                             <TimeAgo datetime={created} live={true} />
                         </span>
-                        <span> - <a href="javascript:" onClick={this.updateCommentForm}>
-                                {this.state.commentText}
-                            </a>
-                        </span>
+                        {this.props.user.username &&
+                            <span> - <a href="javascript:" onClick={this.updateCommentForm}>
+                                    {this.state.commentText}
+                                </a>
+                            </span>
+                        }
                         {/* <span>
                             <a href="javascript:">
                                 <Like />

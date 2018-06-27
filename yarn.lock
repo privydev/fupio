@@ -1062,6 +1062,10 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+browser-image-resizer@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/browser-image-resizer/-/browser-image-resizer-1.1.4.tgz#c9b15f30ec9b2b037eb9c89e512885e2ebd15524"
+
 browser-resolve@^1.11.0:
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/browser-resolve/-/browser-resolve-1.11.2.tgz#8ff09b0a2c421718a1051c260b32e48f442938ce"

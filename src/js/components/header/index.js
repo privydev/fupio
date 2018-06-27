@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 
 import TagLink from '../tagLink';
+import Search from '../search';
 
 export default class Header extends Component {
 	constructor(props){
@@ -19,6 +20,10 @@ export default class Header extends Component {
 							{/* <Link href="/discussion" title="Discussion">
 								<span class="icon icon-chat"></span>
 							</Link> */}
+							<Link href="/" title="Home">
+								<span class="icon icon-home"></span>
+							</Link>
+							<Search {...this.props} />
 							<Link href="/user/settings" title="Settings">
 								<span class="icon icon-cog"></span>
 							</Link>
