@@ -2,19 +2,18 @@
     background: #f0f2f3;
     min-height: 5em;
     margin-top: .7em;
-    padding: 0.5em;
+    padding: 0.6em;
     box-shadow: 0 1px 1px #80888f;
     color: #485f68;
-  
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     border-radius: 5px;
 
     content {
       min-height: 2em;
 
       & > img {
-        height: 15em;
+        width: 60%;
+        object-fit: cover;
+        max-height: 500px;
       }
     }
   
@@ -25,9 +24,6 @@
         height: auto;
         background-color: #f0f2f3;
         box-shadow: 0 2px 2px rgba(0,0,0,0.3);
-        
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
         border-radius: 5px;
     }
   
