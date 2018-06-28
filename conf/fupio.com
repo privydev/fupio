@@ -65,6 +65,8 @@ server {
         http2_push /manifest.json;
     }
 
+    
+
     access_log /var/www/log/nginx-access.log;
     error_log /var/www/log/nginx-error.log;
 
