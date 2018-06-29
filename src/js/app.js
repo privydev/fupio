@@ -9,7 +9,8 @@ import Settings from './pages/settings';
 
 const {
 	isSignInPending, isUserSignedIn, redirectToSignIn, 
-	handlePendingSignIn, signUserOut, loadUserData, lookupProfile,
+	handlePendingSignIn, signUserOut, loadUserData, 
+	lookupProfile, Person, 
 	getFile, putFile
 } = window.blockstack;
 
@@ -36,6 +37,7 @@ export default class App extends Component {
 			initialWallLoad: false,
 			feedListFileName: 'fupio-feeds-ai.json',
 			feeds: {},
+			profiles: {},
 			tagCount: 7,
 			updateMainState: this.updateMainState.bind(this),
 			followTag: this.followTag.bind(this),
@@ -105,7 +107,7 @@ export default class App extends Component {
 	};
 	handleWebSocket = (e) => {
 		const message = JSON.parse(e.data || '{}');
-		// console.log("received", message);
+		console.log("received", message);
 		switch (message.type) {
 			case "feed_load_promise": {
 				this.loadFeedPromise(message.data);
@@ -121,6 +123,15 @@ export default class App extends Component {
 		const feeds = this.state.feeds;
 		const newRank = hot(0, 0, new Date(feedRaw.updated));
 		const feed = {resolved: false, rank: newRank, ...feedRaw};
+		
+		if (`${feed.created}-${feed.identity}` in feeds && 
+			feeds[`${feed.created}-${feed.identity}`].resolved &&
+			feedRaw.updated <= feeds[`${feed.created}-${feed.identity}`].updated) {
+			console.log("r5857 returned false")
+			return false
+		}
+		
+		
 		feeds[`${feed.created}-${feed.identity}`] = feed;
 		this.setState({feeds: feeds});
 
@@ -136,6 +147,23 @@ export default class App extends Component {
 					let feedsSnapShot = this.state.feeds;
 					let newFeed = feedsSnapShot[`${feed.created}-${feed.identity}`];
 					
+					// get the user photo
+					if (!(feed.username in this.state.profiles) 
+					//|| profiles[feed.username] !== "pending"
+					) {
+						const {profiles} = this.state;
+						// set pending
+						// profiles[feed.username] = "pending";
+						// this.setState({profiles: profiles});
+						// load the image
+						lookupProfile(feed.username)
+							.then(profile => {
+								profiles[feed.username] = profile;
+								this.setState({profiles: profiles});
+								const person = new Person(profile);
+								newFeed.avatar = person.avatarUrl();
+							})
+					}
 					// update the data
 					if (newFeed) {
 						newFeed.resolved = true;
@@ -153,7 +181,7 @@ export default class App extends Component {
 
 		const feedKey = `${feed.created}-${feed.identity}`;
 		this.state.ws.json({ type: 'follow_tag', data: {'name': feedKey}});
-		
+
 	};
 	loadCommentPromise = (comment) => {
 		const feedsSnapshot = this.state.feeds;
@@ -222,8 +250,8 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Main path="/" {...this.state} />
 					<Page path="/page/:page_slug" {...this.state} />
-					<Wall path="/:feed_slug" {...this.state} />
-					<Settings path="/user/settings" {...this.state} />
+					<Wall path="/:feed_slug" {...this.state} feeds={null} />
+					<Settings path="/user/settings" {...this.state} feeds={null} />
 				</Router>
 		);
 	};

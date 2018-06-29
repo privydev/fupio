@@ -6,7 +6,7 @@ export default class Default extends Component {
 		super(props);
 	}
     
-    render({ suggested, userSettings }) {
+    render({ suggested }) {
 		return (
             <div class="onboarding feed text-center">
 				{suggested.map((tag) => (

@@ -17,7 +17,9 @@ export default class Feed extends Component {
 		super(props);
 		this.state = {
             commentFormOpen: false,
-            commentText: comment_button
+            commentText: comment_button,
+            imageLoaded: false,
+            avatar: null
         }
     }
     updateCommentForm = (event) => {
@@ -30,14 +32,15 @@ export default class Feed extends Component {
         window.open(this.props.image.base64, "title here", "width=400, height=300");
         return false;
     }
-    render({identity, created, username, text, comments, tags, image}, {}) {
+    render({identity, created, username, text, comments, tags, image, avatar}, {}) {
         return (
             <div style="margin: 1.67em auto">
                 <div class="feed row">
                     <div class="col-tenth">
                         <a href="javascript:">
-                            <img class="profileImage" onError={(e)=>{e.target.src="/profile.png"}} 
-                                src={`https://gaia.blockstack.org/hub/${identity}//avatar-0`} />
+                            <img class="profileImage" 
+                                onError={(e)=>{e.target.src="/profile.png"}} 
+                                src={avatar ? avatar : "/profile.png" } />
                         </a>
                     </div>
                     <div class="col">
@@ -75,53 +78,16 @@ export default class Feed extends Component {
                         {this.state.commentFormOpen && 
                             <CreateComment {...this.props} />
                         }
+                        <hr />
+                        <tags>
+                            {tags && tags.map(tag => <span>
+                                <TagButton tag={tag} {...this.props} />
+                            </span>)}
+                        </tags> 
                     </div>
+                    
                 </div>
-                <div class="feed">
-                    <a href="javascript:">
-                        <img class="profileImage" onError={(e)=>{e.target.src="/profile.png"}} 
-                            src={`https://gaia.blockstack.org/hub/${identity}//avatar-0`} />
-                    </a>
-                    <content>
-                        <a href="javascript:">
-                            {username ? 
-                                <strong>{ username }</strong> : 
-                                <strong>{ identity.slice(0, 9) }...</strong>
-                            }
-                        </a>
-                        {text ? <p>{text}</p> : <Loading />}
-                        {image && image.name &&
-                            <img src={image.base64} title={image.origin} />
-                        }
-                    </content>
-                    <hr />
-                    <actions>
-                        <span>
-                            <TimeAgo datetime={created} live={true} />
-                        </span>
-                        {this.props.user.username &&
-                            <span> - <a href="javascript:" onClick={this.updateCommentForm}>
-                                    {this.state.commentText}
-                                </a>
-                            </span>
-                        }
-                        {/* <span>
-                            <a href="javascript:">
-                                <Like />
-                            </a>
-                        </span> */}
-                    </actions>
-                    <hr />
-                    <CommentList comments={comments} />
-                    {this.state.commentFormOpen && 
-                        <CreateComment {...this.props} />
-                    }
-                </div>
-                <tags>
-                    {tags && tags.map(tag => <span>
-                        <TagButton tag={tag} {...this.props} />
-                    </span>)}
-                </tags>  
+                 
             </div>
         );
     }
