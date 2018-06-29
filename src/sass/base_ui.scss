@@ -15,15 +15,10 @@ form{
 	    color: #333;
 	    font-size: inherit;
 
-	    -webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		border-radius: 5px;
+	    border-radius: 5px;
 	}
 	.tags-input{
 		padding:0.5em .8em !important;
-	}
-	span.tag{
-		background: #505664;
 	}
 	textarea{
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -32,14 +27,14 @@ form{
 }
 input[type=submit], button.action{
     position:relative;
-    width:100%;
-    border:0;
-    font-size:1.1em;
-    padding:1em;
-    background:#7aa991;
-    color:#fff;
-    text-shadow:1px 1px 0 rgba(0,0,0,.1);
-    box-shadow:0 3px 0 #7c9285;
+    width: 100%;
+    border: 0;
+    font-size: 1.1em;
+    padding: 1em;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.1);
+    background: var(--mainThemeColorDarker);
+    box-shadow: 0 3px 0 var(--mainThemeColorShadow);
 }
 input[type=submit]:hover{
     color:#fff;
@@ -52,7 +47,6 @@ button.action.red{
     background: #f26964;
     color: #fff;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
-    -webkit-box-shadow: 0 3px 0 #c1524e;
     box-shadow: 0 3px 0 #c1524e;
     position: relative;
     width: 100%;

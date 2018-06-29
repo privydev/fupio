@@ -1,3 +1,10 @@
+:root {
+	--mainThemeBGColor: #9bd6b8;
+	--mainThemeColorDarker: #7aa991;
+	--mainThemeColorShadow: #7c9285;
+	--mainThemeTextColor: #505664;
+}
+
 * {
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
@@ -7,8 +14,8 @@
 html {
 	padding: 0;
 	margin:0;
-	background: #9BD6B8;
-	color: #505664;
+	background: var(--mainThemeBGColor);
+	color: var(--mainThemeTextColor);
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 400;
 }
@@ -19,7 +26,7 @@ html {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color:#9BD6B8;
+    background-color: var(--mainThemeBGColor);
     z-index: 9999999;
 }
 
@@ -41,27 +48,25 @@ hr{
 	margin: 0.2em 0;
 }
 input, button, textarea{
-	-webkit-border-radius: 0.2em;
-      -moz-border-radius: 0.2em;
-	  border-radius: 0.2em;
+      border-radius: 0.2em;
 	  border: none;
 }
 ::selection {
-      background:#505664;
+      background:var(--mainThemeTextColor);
       color:#f0f2f3;
 }
 ::-moz-selection {
-      background:#505664;
+      background:var(--mainThemeTextColor);
       color:#f0f2f3;
 }
 ::-webkit-input-placeholder {
-	color:#505664;
+	color:var(--mainThemeTextColor);
 }
 :-moz-placeholder {
-	color:#505664;
+	color:var(--mainThemeTextColor);
 }
 ::-moz-placeholder {
-	color:#505664;
+	color:var(--mainThemeTextColor);
 }
 :invalid {
   box-shadow: none;

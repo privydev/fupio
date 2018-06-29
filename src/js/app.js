@@ -39,6 +39,7 @@ export default class App extends Component {
 			tagCount: 7,
 			updateMainState: this.updateMainState.bind(this),
 			followTag: this.followTag.bind(this),
+			unFollowTag: this.unFollowTag.bind(this),
 			handleSignIn: this.handleSignIn.bind(this),
 			handleSignOut: this.handleSignOut.bind(this)
 		}
@@ -118,7 +119,7 @@ export default class App extends Component {
 	};
 	loadFeedPromise = (feedRaw) => {
 		const feeds = this.state.feeds;
-		const newRank = hot(0, 0, new Date(feedRaw.created));
+		const newRank = hot(0, 0, new Date(feedRaw.updated));
 		const feed = {resolved: false, rank: newRank, ...feedRaw};
 		feeds[`${feed.created}-${feed.identity}`] = feed;
 		this.setState({feeds: feeds});
@@ -189,11 +190,24 @@ export default class App extends Component {
 		const newUserSettings = this.state.userSettings;
 		if(!newUserSettings.tags.includes(tag)){
 			const newUserSettings = this.state.userSettings;
-			newUserSettings.tags = this.unique(newUserSettings.tags);
 			newUserSettings.tags.push(tag.toLowerCase());
+			newUserSettings.tags = this.unique(newUserSettings.tags);
 			this.setState({userSettings: newUserSettings});
 			putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })
 			this.state.ws.json({ type: 'follow_tag', data: {'name': tag}});
+		}
+	};
+	unFollowTag = (tagRaw) => {
+		const tag = tagRaw.toLowerCase();
+		const newUserSettings = this.state.userSettings;
+		if(newUserSettings.tags.includes(tag)){
+			const newUserSettings = this.state.userSettings;
+			newUserSettings.tags = this.unique(newUserSettings.tags);
+			// remove string from array
+			newUserSettings.tags = newUserSettings.tags.filter(e => e !== tag.toLowerCase());
+			this.setState({userSettings: newUserSettings});
+			putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })
+			this.state.ws.json({ type: 'unfollow_tag', data: {'name': tag}});
 		}
 	};
 	handleRoute = e => {

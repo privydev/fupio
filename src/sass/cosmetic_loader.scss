@@ -9,7 +9,7 @@
 .loader {
 	height: 30px;
 	width: 30px;
-	color: #505664;
+	color: var(--mainThemeTextColor);
     z-index: 666;
 	display: inline-block;
     vertical-align: top;	

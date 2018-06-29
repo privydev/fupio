@@ -47,9 +47,9 @@ export default class Wall extends Component {
 						}
 
 						{user && user.username && wsConnected && window.location.pathname.length > 1 && 
-							<tags class="text-center">
+							<div class="text-center" style="margin-bottom: 1em">
 								<TagButton tag={this.state.slug} {...this.props} />
-							</tags>
+							</div>
 						}
 						
 						{user && user.username && wsConnected && userSettings.tags.length > tagCount && 
@@ -73,13 +73,13 @@ export default class Wall extends Component {
 							feed => <Feed {...feed} {...this.props} />
 						) }
 
-						{Object.keys(this.props.feeds).length == 0 && 
+						{/* {Object.keys(this.props.feeds).length == 0 && 
 							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
 								<content>
 									Seems like this no one created a feed with this tag yet.
 								</content>
 							</div>
-						}
+						} */}
 					</div>
 					<Footer {...this.props} />
 				</div>

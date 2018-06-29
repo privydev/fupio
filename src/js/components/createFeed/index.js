@@ -113,9 +113,9 @@ export default class CreateFeed extends Component {
                         <div class="col imageUpload">
                             <input onChange={this.handleFileSelect} type="file" accept="image/*" />
                         </div>
-                        <div class="col">
+                        <div class="col-third">
                             {!imageLoading && 
-                                <input type="submit" value="send" />
+                                <input type="submit" value="create feed" />
                             }
                             {imageLoading && 
                                 <center><Loading /></center>
