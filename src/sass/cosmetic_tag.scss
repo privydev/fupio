@@ -9,22 +9,22 @@
     line-height: 3.5em;
 
     a {
-        padding: 8px 12px;
+        padding: 7px 10px;
         width: auto;
-        background-color: #2561b4;
+        background-color: var(--mainThemeColorDarker);
         margin: 0;
+        letter-spacing: 0.1em;
 
-        font-weight: bold;
-        color: #8fd1ea;
-        text-shadow: 1px 1px 0px #07526e;
-        border-right: solid 1px #07526e;
-
-        background-image: linear-gradient(to bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
+        // font-weight: bold;
+        color: #fff;
+        text-shadow: 0px 1px 0px #537966;
+        border-right: solid 1px #537966;
 
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-
-        box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 0px 10px 5px #999 ;
+        
+        background-image: linear-gradient(to bottom, #82b39a 0%, #739f89 100%);
+        box-shadow: inset 0px 1px 0px var(--mainThemeColorDarker), 0px 5px 0px 0px #537966, 0px 10px 5px #999 ;
     }
 
 
@@ -34,24 +34,27 @@
         background-color: #3bb3e0;
         text-decoration: none;
         color: #fff;
+        text-shadow: 0px 1px 0px #537966;
         position: inline;
-        padding: 8px 12px;
+        padding: 7px 10px;
         border-left: solid 1px #2ab7ec;
-        background-image: linear-gradient(to bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-
+        
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
 
+        background-image: linear-gradient(to bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
         box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #156785, 0px 10px 5px #999;
 
         &.active {
-            opacity: 0.8;
+            // opacity: 0.8;
             position: relative;
             top: 3px;
-            background-image: linear-gradient(to bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
-            box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #156785, 0px 5px 3px #999;
+            background: var(--mainThemeColorDarker);
+            border-left: solid 1px var(--mainThemeColorShadow);
+            background-image: linear-gradient(to bottom, #82b39a 0%, #739f89 100%);
+            box-shadow: inset 0px 1px 0px #9BD6B8, 0px 2px 0px 0px #537966, 0px 5px 3px #999;
         }
     }
 }
