@@ -6,6 +6,7 @@ import Main from './pages/main';
 import Wall from './pages/wall';
 import Page from './pages/page';
 import Settings from './pages/settings';
+import Discover from './pages/discover';
 
 const {
 	isSignInPending, isUserSignedIn, redirectToSignIn, 
@@ -107,7 +108,6 @@ export default class App extends Component {
 	};
 	handleWebSocket = (e) => {
 		const message = JSON.parse(e.data || '{}');
-		console.log("received", message);
 		switch (message.type) {
 			case "feed_load_promise": {
 				this.loadFeedPromise(message.data);
@@ -163,6 +163,9 @@ export default class App extends Component {
 								const person = new Person(profile);
 								newFeed.avatar = person.avatarUrl();
 							})
+					} else {
+						const person = new Person(this.state.profiles[feed.username]);
+						newFeed.avatar = person.avatarUrl();
 					}
 					// update the data
 					if (newFeed) {
@@ -249,9 +252,10 @@ export default class App extends Component {
 		return (
 				<Router onChange={this.handleRoute}>
 					<Main path="/" {...this.state} />
+					<Wall path="/:feed_slug" {...this.state} />
 					<Page path="/page/:page_slug" {...this.state} />
-					<Wall path="/:feed_slug" {...this.state} feeds={null} />
 					<Settings path="/user/settings" {...this.state} feeds={null} />
+					<Discover path="/user/discover" {...this.state} feeds={null} />
 				</Router>
 		);
 	};

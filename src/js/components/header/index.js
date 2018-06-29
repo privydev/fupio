@@ -23,13 +23,13 @@ export default class Header extends Component {
 							<Link href="/" title="Home">
 								<span class="icon icon-home"></span>
 							</Link>
-							<Search {...this.props} />
+							<Link href="/user/discover" title="Discover">
+								<span class="icon icon-star"></span>
+							</Link>
 							<Link href="/user/settings" title="Settings">
 								<span class="icon icon-cog"></span>
 							</Link>
-							<Link href="#" title="Logout" onClick={ this.props.handleSignOut }>
-								<span class="icon icon-logout"></span>
-							</Link>
+							<Search {...this.props} />
 						</nav>
 					}
 					{/* TODO: Kapalı betadan çıkınca burayı aç */}

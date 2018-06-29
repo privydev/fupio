@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
 
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import Onboarding from '../../components/onboarding';
 
 export default class Default extends Component {
     constructor(props) {
@@ -16,18 +16,10 @@ export default class Default extends Component {
 				<Header {...this.props} />
 				<div class="container">
 					<div class="wall page" style={`min-height: ${(window.innerHeight)/7*5}px;`}>
-						<form>
-                            <label>Username</label>
-                            <input type="text" value={user.username} disabled />
-                        </form>
+                        <h2>Discover</h2>
+						<label>Tag Suggestions</label>
+                        <Onboarding {...this.props} />
                         <hr />
-						<label style="margin-top: 3em">
-							<span>Logout </span> 
-							
-						</label>
-						<Link href="#" title="Logout" onClick={ this.props.handleSignOut }>
-								<span class="icon icon-logout"></span>
-						</Link>
 					</div>
 					<Footer {...this.props} />
 				</div>

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import TimeAgo from 'preact-timeago';
+import Markdown from 'preact-markdown';
 
-import TagLink from '../tagLink';
 import TagButton from '../tagButton';
 
 import CommentList from '../commentList';
@@ -51,7 +51,7 @@ export default class Feed extends Component {
                                     <strong>{ identity.slice(0, 9) }...</strong>
                                 }
                             </a>
-                            {text ? <p>{text}</p> : <Loading />}
+                            {text ? <Markdown markdown={text} /> : <Loading />}
                             {image && image.name &&
                                 <img src={image.base64} title={image.origin} />
                             }

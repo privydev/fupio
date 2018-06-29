@@ -26,6 +26,10 @@ server {
     location ~ \.(aspx|php|jsp|cgi|py)$ {
         return 410;
     }
+    
+    location = /api/blockchain.json {
+        root /root/.orion8/blockchain.db;
+    }
 
     # location /cache.manifest {
     #     rewrite (.*) /static/cache.manifest;

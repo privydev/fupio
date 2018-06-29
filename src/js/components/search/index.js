@@ -24,7 +24,7 @@ export default class Search extends Component {
         this.setState({clickedIcon: true})
     }
 	render({}, {clickedIcon}) {
-        const icon = <span onClick={this.onClickIcon} class="icon icon-search"></span>
+        const icon = <span onClick={this.onClickIcon} class="icon icon-search" style="padding-left:0.3em"></span>
         const form = (<form style="display:inline" onSubmit={this.onSubmitForm} action="javascript:">
                         <input onInput={this.onChangeText} class="search" type="text" 
                             placeholder="Go to Tag" autofocus />
