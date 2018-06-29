@@ -28,7 +28,7 @@ export default class CreateFeed extends Component {
             text: this.state.text.trim(),
             comments: [],
             rating: null,
-            tags: this.state.tags,
+            tags: this.state.tags.filter(tag => tag.length > 1),
             image: this.state.image,
             created: Date.now(),
             identity: this.props.user.identityAddress
