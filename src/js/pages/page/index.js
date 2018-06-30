@@ -19,8 +19,7 @@ export default class Default extends Component {
 		.then( content => {
 			this.setState({content: content})
 			this.loadContent();
-		})
-		
+		});
 		// Scroll to top
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -28,7 +27,6 @@ export default class Default extends Component {
 	componentDidUpdate(){
 		setInterval(()=>{this.loadContent()}, 2000);
 	}
-
 	loadContent() {
 		const page_content = this.state.content[this.props.page_slug];
 		this.setState({title: page_content.title, body: page_content.body})

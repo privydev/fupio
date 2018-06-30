@@ -19,14 +19,14 @@ export default class CommentList extends Component {
                     <div>
                         <Comment {...comments[0]} />
                         <a href="javascript:" onClick={this.openCommentList}>
-                            <span style="border-bottom: 1px dotted">{comments.length - 2} more comments</span>
+                            <span style="border-bottom: 1px dotted">
+                                {comments.length - 2} more comment{comments.length > 3 && <span>s</span>}
+                            </span>
                         </a>
                         <Comment {...comments[comments.length - 1]} />
                     </div>
                 }
-
                 {comments && show && comments.length > 2 && comments.map(comment => <Comment {...comment} />)}
-
                 {comments && comments.length < 3 && comments.map(comment => <Comment {...comment} />)}
             </div>
         );
