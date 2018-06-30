@@ -51,8 +51,8 @@ export default class Feed extends Component {
                                     <strong>{ identity.slice(0, 9) }...</strong>
                                 }
                             </a>
-                            {text ? <Markdown markdown={text} /> : <Loading />}
-                            {image && image.name &&
+                            {text ? <Markdown markdown={text.replace(/!\[(.*?)\]\((.*?)\)/g, '').replace('javascript:', 'javascript_') } /> : <Loading />}
+                            {image && image.name && 
                                 <img src={image.base64} title={image.origin} />
                             }
                         </content>
