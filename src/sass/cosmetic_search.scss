@@ -3,4 +3,10 @@
     width: 7em;
     padding-left: 1em;
     font-size: 1em;
+    color: #fefefe;
+    
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #fefefe;
+        opacity: 1; /* Firefox */
+    }
 }
