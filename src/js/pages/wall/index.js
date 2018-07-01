@@ -17,7 +17,8 @@ export default class Wall extends Component {
 	}
 	componentDidUpdate(){
 		if( this.props.wsConnected && this.props.ws && this.props.userSettings.tags.length > this.props.tagCount && 
-			this.props.profileLoaded && !this.props.initialWallLoad){
+			this.props.profileLoaded && !this.state.wallLoad){
+				this.setState({wallLoad: true});
 				this.loadWall();
 		}
 	}
@@ -26,9 +27,8 @@ export default class Wall extends Component {
 		if (window.location.pathname.length <= 1) {
 			tags = this.props.userSettings.tags
 		}
-		this.props.updateMainState({ feeds: {}, initialWallLoad: true });
+		this.props.updateMainState({ feeds: {} });
 		this.props.ws.json({type: 'load_feeds', data: {'tags': tags}});
-		this.setState({wallLoad: true})
 	}
 	render({userSettings, isLoading, tagCount, user, profileLoaded, wsConnected}) {
  		return (

@@ -25,12 +25,14 @@ export default class CreateComment extends Component {
             this.props.ws.json({ type: 'add_comment', data: comment });
         })
 
-        // const feedsSnapshot = this.props.feeds;
-        // if (!feedsSnapshot[comment.feedId].comments){
-        //     feedsSnapshot[comment.feedId].comments = []
-        // }
-        // feedsSnapshot[comment.feedId].comments.push(comment);
-        // this.props.updateMainState({feeds: feedsSnapshot});
+        if (!this.props.feeds[comment.feedId].comments){
+            this.props.feeds[comment.feedId].comments = []
+        }
+        this.props.feeds[comment.feedId].comments.push(comment);
+        this.props.updateMainState({feeds: this.props.feeds});
+
+        // TODO: Burada gaia üzerindeki json dosyasını update et. 
+        // updated tarihini değiştir.
     }
     render({}, { text }) {
         return (

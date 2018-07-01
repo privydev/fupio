@@ -35,7 +35,6 @@ export default class App extends Component {
 			profileLoaded: false,
 			isLoading: false,
 			pubSubInit: false,
-			initialWallLoad: false,
 			feedListFileName: 'fupio-feeds-ai.json',
 			feeds: {},
 			profiles: {},
@@ -111,6 +110,7 @@ export default class App extends Component {
 		switch (message.type) {
 			case "feed_load_promise": {
 				this.loadFeedPromise(message.data);
+				this.loadProfilePromise(message.data.username);
 				break;
 			}
 			case "comment_load_promise": {
@@ -119,18 +119,25 @@ export default class App extends Component {
 			}
 		}
 	};
+	loadProfilePromise = (username) => {
+		// get the user photo
+		if (!(username in this.state.profiles)) {
+			this.state.profiles[username] = "pending";
+			this.setState({profiles: this.state.profiles})
+			// load the image
+			lookupProfile(username)
+				.then(profile => {
+					let {profiles} = this.state;
+					const person = new Person(profile);
+					profiles[username] = {avatar: person.avatarUrl()};
+					this.setState({profiles: profiles});
+				})
+		} 
+	}
 	loadFeedPromise = (feedRaw) => {
 		const feeds = this.state.feeds;
 		const newRank = hot(0, 0, new Date(feedRaw.updated));
 		const feed = {resolved: false, rank: newRank, ...feedRaw};
-		
-		if (`${feed.created}-${feed.identity}` in feeds && 
-			feeds[`${feed.created}-${feed.identity}`].resolved &&
-			feedRaw.updated <= feeds[`${feed.created}-${feed.identity}`].updated) {
-			console.log("r5857 returned false")
-			return false
-		}
-		
 		
 		feeds[`${feed.created}-${feed.identity}`] = feed;
 		this.setState({feeds: feeds});
@@ -147,26 +154,6 @@ export default class App extends Component {
 					let feedsSnapShot = this.state.feeds;
 					let newFeed = feedsSnapShot[`${feed.created}-${feed.identity}`];
 					
-					// get the user photo
-					if (!(feed.username in this.state.profiles) 
-					//|| profiles[feed.username] !== "pending"
-					) {
-						const {profiles} = this.state;
-						// set pending
-						// profiles[feed.username] = "pending";
-						// this.setState({profiles: profiles});
-						// load the image
-						lookupProfile(feed.username)
-							.then(profile => {
-								profiles[feed.username] = profile;
-								this.setState({profiles: profiles});
-								const person = new Person(profile);
-								newFeed.avatar = person.avatarUrl();
-							})
-					} else {
-						const person = new Person(this.state.profiles[feed.username]);
-						newFeed.avatar = person.avatarUrl();
-					}
 					// update the data
 					if (newFeed) {
 						newFeed.resolved = true;
@@ -187,13 +174,23 @@ export default class App extends Component {
 
 	};
 	loadCommentPromise = (comment) => {
-		const feedsSnapshot = this.state.feeds;
-		if (comment.feedId in feedsSnapshot){
-			if (!feedsSnapshot[comment.feedId].comments){
-				feedsSnapshot[comment.feedId].comments = []
+		if (comment.feedId in this.state.feeds){
+			const feedSnapshot = this.state.feeds[comment.feedId];
+			if (!feedSnapshot.comments){
+				feedSnapshot.comments = []
 			}
-			feedsSnapshot[comment.feedId].comments.push(comment);
-			this.setState({feeds: feedsSnapshot})
+			feedSnapshot.comments.push(comment);
+
+			// feed'i getir, son güncellenme tarihini al.
+			// commentin son güncellenme tarihini al, eğer daha büyükse, 
+			if (comment.updated > feedSnapshot.updated) {
+				feedSnapshot.updated = comment.updated;
+				feedSnapshot.rank = hot(0, 0, new Date(feedSnapshot.updated));
+			}
+
+			this.state.feeds[comment.feedId] = feedSnapshot;
+			this.setState({feeds: this.state.feeds});
+
 		}
 	}
 	loadProfile = () => {
@@ -241,19 +238,24 @@ export default class App extends Component {
 			this.state.ws.json({ type: 'unfollow_tag', data: {'name': tag}});
 		}
 	};
+	sortFeedsByRank = () => {
+		let { feeds } = this.state;
+		feeds.sort( (a, b) => b.rank - a.rank );
+		this.setState({ feeds });
+	}
 	handleRoute = e => {
 		this.currentUrl = e.url;
 	};
 	render() {
 		if(isUserSignedIn() && this.state.user == null){
-			const userData = loadUserData()
-			this.setState({user: userData})
+			const userData = loadUserData();
+			this.setState({user: userData});
 		}
 		return (
 				<Router onChange={this.handleRoute}>
 					<Main path="/" {...this.state} />
 					<Wall path="/:feed_slug" {...this.state} />
-					<Page path="/page/:page_slug" {...this.state} />
+					<Page path="/page/:page_slug" {...this.state} feeds={null} />
 					<Settings path="/user/settings" {...this.state} feeds={null} />
 					<Discover path="/user/discover" {...this.state} feeds={null} />
 				</Router>

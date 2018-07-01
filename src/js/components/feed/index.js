@@ -18,8 +18,7 @@ export default class Feed extends Component {
 		this.state = {
             commentFormOpen: false,
             commentText: comment_button,
-            imageLoaded: false,
-            avatar: null
+            imageLoaded: false
         }
     }
     updateCommentForm = (event) => {
@@ -32,7 +31,7 @@ export default class Feed extends Component {
         window.open(this.props.image.base64, "title here", "width=400, height=300");
         return false;
     }
-    render({identity, created, username, text, comments, tags, image, avatar}, {}) {
+    render({identity, created, username, text, comments, tags, image, profiles}, {}) {
         return (
             <div style="margin: 1.67em auto">
                 <div class="feed row">
@@ -40,7 +39,7 @@ export default class Feed extends Component {
                         <a href="javascript:">
                             <img class="profileImage" 
                                 onError={(e)=>{e.target.src="/profile.png"}} 
-                                src={avatar ? avatar : "/profile.png" } />
+                                src={profiles[username] && profiles[username].avatar ? profiles[username].avatar : "/profile.png" } />
                         </a>
                     </div>
                     <div class="col">
