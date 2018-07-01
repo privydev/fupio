@@ -40,6 +40,14 @@
 	</head>
   <body>
     <script src="/blockstack.min.js"></script>
-    <script src="/bundle.js"></script>
+		<script src="/bundle.js"></script>
+		
+		<script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
+		<script>
+				Raven.config('https://edf8036ce652450e9fa3a51092e65ffd@sentry.io/1235375').install();
+				// Raven.context(function () {
+				// 		initMyApp();
+				// });
+		</script>
   </body>
 </html>
