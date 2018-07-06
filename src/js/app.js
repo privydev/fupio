@@ -36,10 +36,13 @@ export default class App extends Component {
 			isLoading: false,
 			pubSubInit: false,
 			feedListFileName: 'fupio-feeds-ai.json',
-			feeds: {},
+			feeds: [],
+			lastFeedBlock: 0,
 			profiles: {},
 			tagCount: 7,
 			updateMainState: this.updateMainState.bind(this),
+			// getFeed: this.getFeed.bind(this),
+			// updateFeed: this.updateFeed.bind(this),
 			followTag: this.followTag.bind(this),
 			unFollowTag: this.unFollowTag.bind(this),
 			handleSignIn: this.handleSignIn.bind(this),
@@ -53,7 +56,7 @@ export default class App extends Component {
 		  });
 		}
 	};
-	updateMainState(object_to_set){
+	updateMainState(object_to_set) {
 		this.setState(object_to_set)
 	};
 	handleSignIn(e) {
@@ -67,15 +70,12 @@ export default class App extends Component {
 		this.setState({user: null, userSettings: null})
 	};
 	componentDidUpdate() {
-		
 		// if user logged in but profile not loaded
-		if (this.state.user && this.state.profileLoaded == false && this.state.isLoading == false){
-			
+		if (this.state.user && this.state.profileLoaded == false && this.state.isLoading == false) {
 			this.loadProfile();
-
 		}
 		// if profile loaded but WS not connected
-		if (isUserSignedIn() && !this.state.ws && this.state.profileLoaded == true && this.state.isLoading == false){
+		if (isUserSignedIn() && !this.state.ws && this.state.profileLoaded == true && this.state.isLoading == false) {
 			if (window.location.origin.includes("localhost")) {
 				this.initConnection("ws://127.0.0.1:38746");
 			} else {
@@ -83,11 +83,9 @@ export default class App extends Component {
 			}
 		}
 		// init ws pub/sub
-		if (this.state.profileLoaded && this.state.wsConnected && !this.state.pubSubInit){
-			
+		if (this.state.profileLoaded && this.state.wsConnected && !this.state.pubSubInit) {
 			this.setState({pubSubInit: true});
 			this.state.ws.json({type: 'init_pub_sub', data: {'tags': this.state.userSettings.tags}});
-
 		}
 	};
 	unique = x => [...new Set(x)];
@@ -107,6 +105,7 @@ export default class App extends Component {
 	};
 	handleWebSocket = (e) => {
 		const message = JSON.parse(e.data || '{}');
+		console.log("get -> ", message)
 		switch (message.type) {
 			case "feed_load_promise": {
 				this.loadFeedPromise(message.data);
@@ -115,6 +114,10 @@ export default class App extends Component {
 			}
 			case "comment_load_promise": {
 				this.loadCommentPromise(message.data);
+				break;
+			}
+			case "sort_wall": {
+				this.sortFeedsByRank();
 				break;
 			}
 		}
@@ -134,63 +137,78 @@ export default class App extends Component {
 				})
 		} 
 	}
+	getFeed = (created, identity) => {
+		for (let feed of this.state.feeds) {
+			if (parseInt(created) == parseInt(feed.created) && identity == feed.identity) {
+				return feed;
+			}
+		}
+		return false;
+	}
+	updateFeed = (created, identity, data) => {
+		let feedSnapshot = this.state.feeds;
+		feedSnapshot.map((feed, i) => {
+			if (created == feed.created && identity == feed.identity) {
+				feedSnapshot[i] = data;
+				this.setState({feeds: feedSnapshot})
+			}
+		})
+	}
 	loadFeedPromise = (feedRaw) => {
-		const feeds = this.state.feeds;
 		const newRank = hot(0, 0, new Date(feedRaw.updated));
 		const feed = {resolved: false, rank: newRank, ...feedRaw};
 		
-		feeds[`${feed.created}-${feed.identity}`] = feed;
-		this.setState({feeds: feeds});
-
-		const feedSlug = `${feed.created}-${feed.identity}`;
-		this.state.ws.json({ type: 'follow_tag', data: {'name': feedSlug}});
-
-		const options = {username: feed.username, app: this.state.address, decrypt: false};
-		const feedFile = `${feed.created}-${feed.identity}.json`;
-		getFile(feedFile, options).then((file) => {
-				if(file){
-					const feedContent = JSON.parse(file)
-					// clone the feeds
-					let feedsSnapShot = this.state.feeds;
-					let newFeed = feedsSnapShot[`${feed.created}-${feed.identity}`];
-					
-					// update the data
-					if (newFeed) {
-						newFeed.resolved = true;
-						newFeed.username = feedContent.username;
-						newFeed.text = feedContent.text;
-						newFeed.image = feedContent.image;
-						newFeed.likes = feedContent.likes;
-						newFeed.rating = feedContent.rating;
-						// replace feeds
-						feedsSnapShot[`${feed.created}-${feed.identity}`] = newFeed;
-						this.setState({feeds: feedsSnapShot})
-					}
-				}
-		})
-
-		const feedKey = `${feed.created}-${feed.identity}`;
-		this.state.ws.json({ type: 'follow_tag', data: {'name': feedKey}});
-
-	};
-	loadCommentPromise = (comment) => {
-		if (comment.feedId in this.state.feeds){
-			const feedSnapshot = this.state.feeds[comment.feedId];
-			if (!feedSnapshot.comments){
-				feedSnapshot.comments = []
-			}
-			feedSnapshot.comments.push(comment);
-
-			// feed'i getir, son güncellenme tarihini al.
-			// commentin son güncellenme tarihini al, eğer daha büyükse, 
-			if (comment.updated > feedSnapshot.updated) {
-				feedSnapshot.updated = comment.updated;
-				feedSnapshot.rank = hot(0, 0, new Date(feedSnapshot.updated));
-			}
-
-			this.state.feeds[comment.feedId] = feedSnapshot;
+		// feed yoksa ekle.
+		if (this.getFeed(feed.created, feed.identity) == false) {
+		
+			this.state.feeds.unshift(feed);
 			this.setState({feeds: this.state.feeds});
 
+			const feedSlug = `${feed.created}-${feed.identity}`;
+			this.state.ws.json({ type: 'follow_tag', data: {'name': feedSlug}});
+
+			const options = {username: feed.username, app: this.state.address, decrypt: false};
+			const feedFile = `${feed.created}-${feed.identity}.json`;
+			getFile(feedFile, options).then((file) => {
+					if (file) {
+						const feedContent = JSON.parse(file);
+						let newFeed = this.getFeed(feed.created, feed.identity);
+						if (newFeed) {
+							newFeed.resolved = true;
+							newFeed.username = feedContent.username;
+							newFeed.text = feedContent.text;
+							newFeed.image = feedContent.image;
+							newFeed.likes = feedContent.likes;
+							newFeed.rating = feedContent.rating;
+							this.updateFeed(feed.created, feed.identity, newFeed);
+						}
+					}
+			})
+		}
+
+	}
+	parseID = (key) => {
+		const dump = key.split('-');
+		return { created:dump[0], identity: dump[1], commentCreated: dump[2] }
+	}
+	loadCommentPromise = (comment) => {
+		const {created, identity} = this.parseID(comment.feedId);
+		const feed = this.getFeed(created, identity);
+		
+		if (feed) {
+			if (!feed.comments) {
+				feed.comments = []
+			}
+			feed.comments.push(comment);
+			// re-calculate the rank if the created bigger
+			if (comment.updated > feed.updated) {
+				feed.updated = comment.updated;
+				feed.rank = hot(0, 0, new Date(feed.updated));
+			}
+			this.updateFeed(created, identity, feed);
+			if (this.state.user.identityAddress !== comment.identity) {
+				this.sortFeedsByRank();
+			}
 		}
 	}
 	loadProfile = () => {
@@ -199,7 +217,7 @@ export default class App extends Component {
 		getFile(`${this.state.user.identityAddress}-profile.json`, options)
 			.then((file) => {
 				const userSettings = JSON.parse(file || '{}')
-				if(userSettings.tags){
+				if (userSettings.tags) {
 					const newUserSettings = this.state.userSettings;
 					newUserSettings.tags = this.unique(userSettings.tags);
 					this.setState({userSettings: newUserSettings})
@@ -216,7 +234,7 @@ export default class App extends Component {
 	followTag = (tagRaw) => {
 		const tag = tagRaw.toLowerCase();
 		const newUserSettings = this.state.userSettings;
-		if(!newUserSettings.tags.includes(tag)){
+		if (!newUserSettings.tags.includes(tag)) {
 			const newUserSettings = this.state.userSettings;
 			newUserSettings.tags.push(tag.toLowerCase());
 			newUserSettings.tags = this.unique(newUserSettings.tags);
@@ -228,7 +246,7 @@ export default class App extends Component {
 	unFollowTag = (tagRaw) => {
 		const tag = tagRaw.toLowerCase();
 		const newUserSettings = this.state.userSettings;
-		if(newUserSettings.tags.includes(tag)){
+		if (newUserSettings.tags.includes(tag)) {
 			const newUserSettings = this.state.userSettings;
 			newUserSettings.tags = this.unique(newUserSettings.tags);
 			// remove string from array
@@ -247,7 +265,7 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 	render() {
-		if(isUserSignedIn() && this.state.user == null){
+		if (isUserSignedIn() && this.state.user == null) {
 			const userData = loadUserData();
 			this.setState({user: userData});
 		}
@@ -255,9 +273,9 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Main path="/" {...this.state} />
 					<Wall path="/:feed_slug" {...this.state} />
-					<Page path="/page/:page_slug" {...this.state} feeds={null} />
+					<Discover path="/user/discover" {...this.state} />
 					<Settings path="/user/settings" {...this.state} feeds={null} />
-					<Discover path="/user/discover" {...this.state} feeds={null} />
+					<Page path="/page/:page_slug" {...this.state} feeds={null} />
 				</Router>
 		);
 	};

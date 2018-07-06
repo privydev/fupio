@@ -6,7 +6,7 @@ export default class TagLink extends Component {
     }
 	handleTagRoute = (e) => {
         
-        this.props.updateMainState({ feeds: {} });
+        this.props.updateMainState({ feeds: [] });
         if(this.props.href == "/"){
             this.props.ws.json({type: 'load_feeds', data: {'tags': this.props.userSettings.tags}});
         }

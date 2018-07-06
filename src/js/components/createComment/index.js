@@ -24,15 +24,11 @@ export default class CreateComment extends Component {
         putFile(commentFile, JSON.stringify(comment), options).then(() => {
             this.props.ws.json({ type: 'add_comment', data: comment });
         })
-
-        if (!this.props.feeds[comment.feedId].comments){
-            this.props.feeds[comment.feedId].comments = []
-        }
-        this.props.feeds[comment.feedId].comments.push(comment);
-        this.props.updateMainState({feeds: this.props.feeds});
-
-        // TODO: Burada gaia üzerindeki json dosyasını update et. 
-        // updated tarihini değiştir.
+        // if (!this.props.feeds[comment.feedId].comments){
+        //     this.props.feeds[comment.feedId].comments = []
+        // }
+        // this.props.feeds[comment.feedId].comments.push(comment);
+        // this.props.updateMainState({feeds: this.props.feeds});
     }
     render({}, { text }) {
         return (

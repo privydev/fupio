@@ -13,7 +13,7 @@ export default class Search extends Component {
     }
     onSubmitForm = (e) => {
         e.preventDefault();
-        this.props.updateMainState({ feeds: {} });
+        this.props.updateMainState({ feeds: [] });
         this.props.ws.json({type: 'load_feeds', data: {'tags': [this.state.text.toLowerCase()]}});
         
         document.body.scrollTop = 0;

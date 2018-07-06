@@ -27,10 +27,10 @@ export default class Wall extends Component {
 		if (window.location.pathname.length <= 1) {
 			tags = this.props.userSettings.tags
 		}
-		this.props.updateMainState({ feeds: {} });
-		this.props.ws.json({type: 'load_feeds', data: {'tags': tags}});
+		this.props.updateMainState({ feeds: [] });
+		this.props.ws.json({type: 'load_feeds', data: {'tags': tags, 'page': 0}});
 	}
-	render({userSettings, isLoading, tagCount, user, profileLoaded, wsConnected}) {
+	render({userSettings, isLoading, tagCount, user, profileLoaded, wsConnected, feeds}) {
  		return (
 			<div>
 				<Header {...this.props} />
@@ -69,9 +69,9 @@ export default class Wall extends Component {
 							</div>
 						}
 						
-						{Object.values(this.props.feeds).sort((f1, f2) => f2.rank - f1.rank).map(
+						{feeds.map(
 							feed => <Feed {...feed} {...this.props} />
-						) }
+						)}
 
 						{/* {Object.keys(this.props.feeds).length == 0 && 
 							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
