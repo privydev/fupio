@@ -123,13 +123,13 @@ export default class App extends Component {
 	};
 	loadProfilePromise = (username) => {
 		// get the user photo
-		if (!(username in this.state.profiles)) {
-			this.state.profiles[username] = "pending";
-			this.setState({profiles: this.state.profiles})
+		let {profiles} = this.state;
+		if (profiles && !(username in profiles)) {
+			profiles[username] = "pending";
+			this.setState({profiles: profiles})
 			// load the image
 			lookupProfile(username)
 				.then(profile => {
-					let {profiles} = this.state;
 					const person = new Person(profile);
 					profiles[username] = {avatar: person.avatarUrl()};
 					this.setState({profiles: profiles});

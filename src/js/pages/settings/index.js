@@ -16,18 +16,25 @@ export default class Default extends Component {
 				<Header {...this.props} />
 				<div class="container">
 					<div class="wall page" style={`min-height: ${(window.innerHeight)/7*5}px;`}>
-						<form>
-                            <label>Username</label>
-                            <input type="text" value={user.username} disabled />
-                        </form>
-                        <hr />
-						<label style="margin-top: 3em">
-							<span>Logout </span> 
-							
-						</label>
-						<Link href="#" title="Logout" onClick={ this.props.handleSignOut }>
-								<span class="icon icon-logout"></span>
-						</Link>
+						<div class="row">
+							<div class="col">
+								{user &&
+									<form>
+										<label>Username</label>
+										<input type="text" value={user.username} disabled />
+										<hr />
+									</form>
+								}
+							</div>
+							<div class="col">
+								<label style="margin-top: 3em">
+									<span>Logout </span> 
+								</label>
+								<Link href="#" title="Logout" onClick={ this.props.handleSignOut }>
+										<span class="icon icon-logout"></span>
+								</Link>
+							</div>
+						</div>
 					</div>
 					<Footer {...this.props} />
 				</div>
