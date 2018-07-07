@@ -37,7 +37,6 @@ export default class App extends Component {
 			pubSubInit: false,
 			feedListFileName: 'fupio-feeds-ai.json',
 			feeds: [],
-			lastFeedBlock: 0,
 			profiles: {},
 			tagCount: 7,
 			updateMainState: this.updateMainState.bind(this),

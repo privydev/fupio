@@ -25,7 +25,7 @@ form{
 		font-size: inherit;
 	}
 }
-input[type=submit], button.action{
+input[type=submit], button.action, .button{
     position:relative;
     width: 100%;
     border: 0;
@@ -35,6 +35,9 @@ input[type=submit], button.action{
     text-shadow: 1px 1px 0 rgba(0,0,0,.1);
     background: var(--mainThemeColorDarker);
     box-shadow: 0 3px 0 var(--mainThemeColorShadow);
+}
+input[type=submit]:disabled{
+    opacity: 0.6;
 }
 input[type=submit]:hover{
     color:#fff;
@@ -54,4 +57,11 @@ button.action.red{
     font-size: 1.2em;
     padding: 1em;
     border-radius: 0.2em;
+}
+
+.button {
+    border-radius: 0.2em;
+    padding: 0.4em;
+    color: white !important;
+    
 }

@@ -13,11 +13,20 @@ export default class CreateFeed extends Component {
         this.state = {
             tags: [],
             text: "",
-            image: null
+            image: null,
+            canSubmit: false
         }
     }
     onChangeTags = (event) => {
-        this.setState({ tags: event.value });
+        const tags = event.value ;
+        this.setState({ tags: tags });
+
+        if(tags.length > 0){
+            this.setState({canSubmit: true})
+        }
+        else {
+            this.setState({canSubmit: false})
+        }
     }
     onChangeText = (event) => {
         this.setState({ text: event.target.value });
@@ -99,7 +108,7 @@ export default class CreateFeed extends Component {
         })
 
     }
-    render({},{text, tags, imageLoading}) {
+    render({},{text, tags, imageLoading, canSubmit}) {
         return (
             <div class="createFeed">
                 <form action="javascript:" onSubmit={this.onSubmitFeed}>
@@ -113,14 +122,19 @@ export default class CreateFeed extends Component {
                         <div class="col imageUpload">
                             <input onChange={this.handleFileSelect} type="file" accept="image/*" />
                         </div>
-                        <div class="col-third">
-                            {!imageLoading && 
-                                <input type="submit" value="create feed" />
-                            }
-                            {imageLoading && 
-                                <center><Loading /></center>
-                            }
-                        </div>
+                        {canSubmit &&
+                            <div class="col col-third">
+                                {!imageLoading && canSubmit &&
+                                    <input type="submit" value="create feed" />
+                                }
+                                {!imageLoading && !canSubmit &&
+                                    <input type="submit" value="create feed" disabled />
+                                }
+                                {imageLoading && 
+                                    <center><Loading /></center>
+                                }
+                            </div>
+                        }
                     </div>
                 </form>
             </div>

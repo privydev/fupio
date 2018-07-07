@@ -15,11 +15,8 @@
           }
         }
 
-        .imageUpload{
-          margin-right: 0;
-          @include lg {
-            margin-right: 0.5em;
-          }
+        .col{
+          padding: 0 0.4em
         }
       }
   }

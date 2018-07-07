@@ -28,7 +28,7 @@ export default class Wall extends Component {
 			tags = this.props.userSettings.tags
 		}
 		this.props.updateMainState({ feeds: [] });
-		this.props.ws.json({type: 'load_feeds', data: {'tags': tags, 'page': 0}});
+		this.props.ws.json({type: 'load_feeds', data: {'tags': tags, 'page': this.props.page || 0}});
 	}
 	render({userSettings, isLoading, tagCount, user, profileLoaded, wsConnected, feeds}) {
  		return (
@@ -72,6 +72,23 @@ export default class Wall extends Component {
 						{feeds.map(
 							feed => <Feed {...feed} {...this.props} />
 						)}
+						<div class="row" style="margin-top: 2em">
+							{this.props.page && parseInt(this.props.page) > 0 &&
+								<div class="col text-left">
+									<a class="button" href={`?page=${(parseInt(this.props.page) || 0)-1}`}>
+										<span class="icon icon-left-open"></span> previous
+									</a>
+								</div>
+							}
+							{feeds.length > 3 && 
+								<div class="col text-right">
+									<a class="button" href={`?page=${(parseInt(this.props.page) || 0)+1}`}>
+										<span class="icon icon-right-open"></span> next
+									</a>
+								</div>
+							}
+						</div>
+						
 
 						{/* {Object.keys(this.props.feeds).length == 0 && 
 							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
