@@ -30,6 +30,7 @@ export default class App extends Component {
 				'Travel', 'Photography', 'Design', 'Music', 'DIY', 'Crafts', 
 				'Tattoos', 'Education'
 			],
+			popularTags: [],
 			address: window.location.origin.replace("https", "http"),
 			userSettings: {tags: []},
 			profileLoaded: false,
@@ -113,6 +114,13 @@ export default class App extends Component {
 			}
 			case "comment_load_promise": {
 				this.loadCommentPromise(message.data);
+				break;
+			}
+			case "tag_suggestion": {
+				const tag = message.data;
+				const {popularTags} = this.state;
+				popularTags.unshift(tag);
+				this.setState({popularTags: this.unique(popularTags)})
 				break;
 			}
 			case "sort_wall": {

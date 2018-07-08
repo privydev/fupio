@@ -25,14 +25,16 @@ export default class Default extends Component {
 										<hr />
 									</form>
 								}
-							</div>
-							<div class="col">
+								<hr />
 								<label style="margin-top: 3em">
 									<span>Logout </span> 
 								</label>
 								<Link href="#" title="Logout" onClick={ this.props.handleSignOut }>
 										<span class="icon icon-logout"></span>
 								</Link>
+							</div>
+							<div class="col">
+								
 							</div>
 						</div>
 					</div>
