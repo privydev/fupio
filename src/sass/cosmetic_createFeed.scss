@@ -1,0 +1,23 @@
+.createFeed {
+      background: #f0f2f3;
+      min-height: 4em;
+      padding: 0.5em;
+      box-shadow: 0 1px 1px #80888f;
+      
+      border-radius: 0.2em;
+    
+      form {
+        textarea {
+          height: 4em;
+          
+          &:focus {
+            height: 8em;
+          }
+        }
+
+        .col{
+          padding: 0 0.4em
+        }
+      }
+  }
+  

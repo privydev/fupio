@@ -1,0 +1,67 @@
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+form{
+	input, textarea, .tags-input{
+		margin-bottom: 0.5em;
+	    padding: 1.2em;
+	    width: 100%;
+	    border: none;
+	    background: none repeat scroll 0 0 rgba(0,0,0,0.1);
+	    color: #333;
+	    font-size: inherit;
+
+	    border-radius: 5px;
+	}
+	.tags-input{
+		padding:0.5em .8em !important;
+	}
+	textarea{
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: inherit;
+	}
+}
+input[type=submit], button.action, .button{
+    position:relative;
+    width: 100%;
+    border: 0;
+    font-size: 1.1em;
+    padding: 1em;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.1);
+    background: var(--mainThemeColorDarker);
+    box-shadow: 0 3px 0 var(--mainThemeColorShadow);
+}
+input[type=submit]:disabled{
+    opacity: 0.6;
+}
+input[type=submit]:hover{
+    color:#fff;
+}
+input[type=submit]:active{
+    top:3px;
+    box-shadow:none;
+}
+button.action.red{
+    background: #f26964;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 3px 0 #c1524e;
+    position: relative;
+    width: 100%;
+    border: 0;
+    font-size: 1.2em;
+    padding: 1em;
+    border-radius: 0.2em;
+}
+
+.button {
+    border-radius: 0.2em;
+    padding: 0.4em;
+    color: white !important;
+    
+}

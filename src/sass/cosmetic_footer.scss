@@ -1,0 +1,37 @@
+.footer {
+	margin: 4em 0 1em 0;
+	font-size: 0.9em;
+	text-align: center;
+
+	.col{
+		border-bottom: 1px dotted;
+		margin: 2em auto;
+
+		@include lg {
+			border-bottom: none;
+			margin: 1em auto;
+		}
+	}
+
+	@include lg {
+		text-align: left;
+	}
+	
+
+	h1{
+		font-size: 1.3em
+	}
+	small{
+		font-size: 0.7em
+	}
+	ul{
+		li{
+			list-style: none;
+		}
+	}
+	.tag{
+		margin-bottom: 0.3em
+	}
+}
+
+

@@ -1,0 +1,69 @@
+{
+  "about": {
+      "title": "About", 
+      "body": [
+        "This Page is under construction. ",
+        "We are working hard to make it happen.",
+        "Thank you for your interests."
+      ]
+  },
+  "team": {
+    "title": "Team", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  },
+  "rules": {
+    "title": "Gameplay", 
+    "body": [
+      "*    There is no notification & distruction. ",
+      "*    All feeds and comments are public and they are stored people's own storage. Fupio keeps just the relation data between the posts.",
+      "*    People can create posts, comments and follow tags. Tags are matter.",
+      "*    User can tag his own post, even with non-following tags. But when user do that, he will become a follower of the tag(s).",
+      "*    People can upvote or downvote someone's feed. The algorithm sorts the feeds in the following tag or user wall.",
+      "*    All we care about is a good community. There is no followers. But will be add reputation score. "
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  },
+  "disclaimers": {
+    "title": "Disclaimers", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  },
+  "branding": {
+    "title": "Branding", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  },
+  "privacy": {
+    "title": "Privacy", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  },
+  "tos": {
+    "title": "Terms of Use", 
+    "body": [
+      "This Page is under construction. ",
+      "We are working hard to make it happen.",
+      "Thank you for your interests."
+    ]
+  }
+}

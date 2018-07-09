@@ -1,0 +1,16 @@
+#loaderBox{
+	position: fixed;
+	top: 1em;
+    right:calc(50% - 10px);
+    text-align: center;
+	z-index: 666;
+}
+
+.loader {
+	height: 30px;
+	width: 30px;
+	color: var(--mainThemeTextColor);
+    z-index: 666;
+	display: inline-block;
+    vertical-align: top;	
+}

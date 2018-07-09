@@ -1,0 +1,61 @@
+.feed {
+    background: #f0f2f3;
+    min-height: 5em;
+    margin-top: 0.7em;
+    padding: 0.6em;
+    box-shadow: 0 1px 1px #80888f;
+    color: #485f68;
+    border-radius: 5px;
+
+    // background: -webkit-linear-gradient(360deg, #dee1e1 10%, #f4f4f4 360%); 
+    // /* Chrome 10+, Saf5.1+ */ 
+    // background: -moz-linear-gradient(360deg, #dee1e1 10%, #f4f4f4 360%); 
+    // /* FF3.6+ */ 
+    // background: linear-gradient(360deg, #dee1e1 10%, #f4f4f4 360%);
+
+    content {
+      min-height: 2em;
+
+      & > img {
+        max-width: 60%;
+        object-fit: cover;
+        max-height: 500px;
+      }
+    }
+  
+    .profileImage {
+        float: left;
+        margin-right: .7em;
+        width: 60px;
+        height: auto;
+        background-color: #f0f2f3;
+        box-shadow: 0 2px 2px rgba(0,0,0,0.3);
+        border-radius: 5px;
+    }
+  
+    & > p{
+      margin-top:3em;
+    }
+  
+    actions {
+      display: block;
+      
+      & > span{
+        margin-right: 0.2em !important;
+
+        
+      }
+
+      a, time{
+        opacity: .7;
+        font-size: 1em;
+      }
+    }
+
+  }
+  
+  // tags {
+  //   display: block;
+  //   white-space: pre-line;
+  //   margin-top: 0.4em !important;
+  // }
