@@ -1,16 +1,14 @@
-# crux
-[![Build Status](https://travis-ci.org/imelismith/crux.svg?branch=master)](https://travis-ci.org/imelismith/crux)
-[![Dependency Status](https://david-dm.org/imelismith/crux.svg?style=flat-square)](https://david-dm.org/imelismith/crux)
+# Fupio
 
-> Crux is a comprehensive starter kit for fast/lightweight application development using Preact.
+> Dead simple microblogging application based on Blockstack project.
 
 ## Get Started
-1. **Clone the repository**. `git clone https://github.com/imelismith/crux.git`.
+1. **Clone the repository**. `git clone https://github.com/mehmetkose/fupio.git`.
 2. **Run yarn or npm install**. `yarn or npm i`.
 3. **Run the app**. `gulp`.
 
 ## Technologies
-Crux offers a rich **LIGHTWEIGHT** development experience using the following technologies:
+Fupio offers a rich **LIGHTWEIGHT** development experience using the following technologies:
 
 | **Tech** | **Description** |
 |----------|-------|
