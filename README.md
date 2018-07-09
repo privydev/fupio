@@ -7,6 +7,10 @@
 2. **Run yarn or npm install**. `yarn or npm i`.
 3. **Run the app**. `gulp`.
 
+## orion8 ?
+for development purposes you need orion8 blockchain which is not open sourced now. 
+this only client side app.
+
 ## Technologies
 Fupio offers a rich **LIGHTWEIGHT** development experience using the following technologies:
 
