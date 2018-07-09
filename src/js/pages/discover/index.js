@@ -15,7 +15,7 @@ export default class Default extends Component {
 		this.setState({init: false})
 	}
 	componentDidUpdate(){
-		if(this.props.ws && !this.state.init) {
+		if(this.props.ws && this.props.wsConnected && !this.state.init) {
 			this.props.ws.json({type: 'popular_tags'});
 			this.setState({init: true})
 		}

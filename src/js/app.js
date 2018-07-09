@@ -31,7 +31,7 @@ export default class App extends Component {
 				'Tattoos', 'Education'
 			],
 			address: window.location.origin.replace("https", "http"),
-			userSettings: {tags: []},
+			userSettings: {tags: ["fupio"]},
 			profileLoaded: false,
 			isLoading: false,
 			pubSubInit: false,

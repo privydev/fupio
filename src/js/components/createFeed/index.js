@@ -13,20 +13,12 @@ export default class CreateFeed extends Component {
         this.state = {
             tags: [],
             text: "",
-            image: null,
-            canSubmit: false
+            image: null
         }
     }
     onChangeTags = (event) => {
         const tags = event.value ;
         this.setState({ tags: tags });
-
-        if(tags.length > 0){
-            this.setState({canSubmit: true})
-        }
-        else {
-            this.setState({canSubmit: false})
-        }
     }
     onChangeText = (event) => {
         this.setState({ text: event.target.value });
@@ -42,9 +34,13 @@ export default class CreateFeed extends Component {
             created: Date.now(),
             identity: this.props.user.identityAddress
         };
-        this.saveFeed(feed);
-        this.saveRelation(feed);
-        this.setState({tags:[], text:"", image: null})
+        if (this.state.tags.length > 0) {
+            this.saveFeed(feed);
+            this.saveRelation(feed);
+            this.setState({tags:[], text:"", image: null})
+        } else {
+            alert("Need to put one tag at least")
+        }
     }
     saveFeed = (feed) => {
         const options = {username: this.props.user.username, app: this.props.address, encrypt: false};
@@ -108,7 +104,7 @@ export default class CreateFeed extends Component {
         })
 
     }
-    render({},{text, tags, imageLoading, canSubmit}) {
+    render({},{text, tags, imageLoading}) {
         return (
             <div class="createFeed">
                 <form action="javascript:" onSubmit={this.onSubmitFeed}>
@@ -122,19 +118,14 @@ export default class CreateFeed extends Component {
                         <div class="col imageUpload">
                             <input onChange={this.handleFileSelect} type="file" accept="image/*" />
                         </div>
-                        {canSubmit &&
-                            <div class="col col-third">
-                                {!imageLoading && canSubmit &&
-                                    <input type="submit" value="create feed" />
-                                }
-                                {!imageLoading && !canSubmit &&
-                                    <input type="submit" value="create feed" disabled />
-                                }
-                                {imageLoading && 
-                                    <center><Loading /></center>
-                                }
-                            </div>
-                        }
+                        <div class="col col-third">
+                            {!imageLoading && 
+                                <input type="submit" value="create feed" />
+                            }
+                            {imageLoading && 
+                                <center><Loading /></center>
+                            }
+                        </div>
                     </div>
                 </form>
             </div>
