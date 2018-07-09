@@ -3,6 +3,7 @@ npm-debug.log
 dist
 .DS_Store
 *.map
+conf/orion8.*
 
 # Coverage used by instanbul
 coverage
