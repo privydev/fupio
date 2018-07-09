@@ -12,17 +12,17 @@ export default class Header extends Component {
 		return (
 			<header class="header">
 				<section class="container">
-					<h1 class="logo">
-						<TagLink href="/" title="Fupio" {...this.props} />
-					</h1>
+					<TagLink href="/" title="Fupio" {...this.props}>
+						<h1 class="logo">Fupio</h1>
+					</TagLink>
 					{this.props.user &&
 						<nav>
 							{/* <Link href="/discussion" title="Discussion">
 								<span class="icon icon-chat"></span>
 							</Link> */}
-							<Link href="/" title="Home">
+							<TagLink href="/" title="Home" {...this.props}>
 								<span class="icon icon-home"></span>
-							</Link>
+							</TagLink>
 							<Link href="/user/discover" title="Discover">
 								<span class="icon icon-star"></span>
 							</Link>

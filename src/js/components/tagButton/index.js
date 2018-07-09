@@ -4,12 +4,23 @@ export default class TagButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isFollowing: false
+            isFollowing: null,
+            init: false
         }
     }
     componentDidMount(){
-        if (this.props.userSettings.tags.includes(this.props.tag.toLowerCase())) {
-            this.setState({isFollowing: true});
+        this.setState({isFollowing: false})
+    }
+    componentDidUpdate(){
+        if (!this.state.init) {
+            const tag = this.props.tag.toLowerCase();
+            const tags = this.props.userSettings.tags.map(tag => tag.toLowerCase())
+            if (tags.includes(tag)) {
+                this.setState({isFollowing: true, init: true});
+            }
+            else {
+                this.setState({isFollowing: false, init: true});
+            }
         }
     }
     handleTagRoute = (e) => {
@@ -38,7 +49,7 @@ export default class TagButton extends Component {
     render({tag}, {isFollowing}) {
         return (
             <div class="tagButton">
-                    <a onClick={this.handleTagRoute} href={`/${tag}`}>{tag}</a>
+                    <a onClick={this.handleTagRoute} href={`/${tag}`}>{tag.toLowerCase()}</a>
                     <button class={isFollowing ? "active" : null} onClick={this.handleFollowAction}>
                         {isFollowing ? 
                             <span class="icon icon-check"></span> : 

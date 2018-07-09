@@ -30,7 +30,6 @@ export default class App extends Component {
 				'Travel', 'Photography', 'Design', 'Music', 'DIY', 'Crafts', 
 				'Tattoos', 'Education'
 			],
-			popularTags: [],
 			address: window.location.origin.replace("https", "http"),
 			userSettings: {tags: []},
 			profileLoaded: false,
@@ -105,7 +104,7 @@ export default class App extends Component {
 	};
 	handleWebSocket = (e) => {
 		const message = JSON.parse(e.data || '{}');
-		console.log("get -> ", message)
+		// console.log("get -> ", message)
 		switch (message.type) {
 			case "feed_load_promise": {
 				this.loadFeedPromise(message.data);
@@ -117,10 +116,10 @@ export default class App extends Component {
 				break;
 			}
 			case "tag_suggestion": {
-				const tag = message.data;
-				const {popularTags} = this.state;
-				popularTags.unshift(tag);
-				this.setState({popularTags: this.unique(popularTags)})
+				const tag = message.data.toLowerCase();
+				const {suggested} = this.state;
+				suggested.unshift(tag);
+				this.setState({suggested: this.unique(suggested)});
 				break;
 			}
 			case "sort_wall": {
@@ -164,16 +163,12 @@ export default class App extends Component {
 	loadFeedPromise = (feedRaw) => {
 		const newRank = hot(0, 0, new Date(feedRaw.updated));
 		const feed = {resolved: false, rank: newRank, ...feedRaw};
-		
 		// feed yoksa ekle.
 		if (this.getFeed(feed.created, feed.identity) == false) {
-		
 			this.state.feeds.unshift(feed);
 			this.setState({feeds: this.state.feeds});
-
 			const feedSlug = `${feed.created}-${feed.identity}`;
 			this.state.ws.json({ type: 'follow_tag', data: {'name': feedSlug}});
-
 			const options = {username: feed.username, app: this.state.address, decrypt: false};
 			const feedFile = `${feed.created}-${feed.identity}.json`;
 			getFile(feedFile, options).then((file) => {
@@ -190,9 +185,8 @@ export default class App extends Component {
 							this.updateFeed(feed.created, feed.identity, newFeed);
 						}
 					}
-			})
+			});
 		}
-
 	}
 	parseID = (key) => {
 		const dump = key.split('-');
@@ -201,7 +195,6 @@ export default class App extends Component {
 	loadCommentPromise = (comment) => {
 		const {created, identity} = this.parseID(comment.feedId);
 		const feed = this.getFeed(created, identity);
-		
 		if (feed) {
 			if (!feed.comments) {
 				feed.comments = []
@@ -219,15 +212,15 @@ export default class App extends Component {
 		}
 	}
 	loadProfile = () => {
-		this.setState({ isLoading: true })
-		const options = { decrypt: true }
+		this.setState({ isLoading: true });
+		const options = { decrypt: true };
 		getFile(`${this.state.user.identityAddress}-profile.json`, options)
 			.then((file) => {
-				const userSettings = JSON.parse(file || '{}')
+				const userSettings = JSON.parse(file || '{}');
 				if (userSettings.tags) {
 					const newUserSettings = this.state.userSettings;
-					newUserSettings.tags = this.unique(userSettings.tags);
-					this.setState({userSettings: newUserSettings})
+					newUserSettings.tags = this.unique(userSettings.tags.map(t => t.toLowerCase()));
+					this.setState({userSettings: newUserSettings});
 				} else {
 					const blankSettings = {tags: [this.state.user.identityAddress], feeds: []};
 					putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(blankSettings), options)
@@ -241,27 +234,29 @@ export default class App extends Component {
 	followTag = (tagRaw) => {
 		const tag = tagRaw.toLowerCase();
 		const newUserSettings = this.state.userSettings;
+		newUserSettings.tags = this.unique(newUserSettings.tags.map(tag => tag.toLowerCase()));
 		if (!newUserSettings.tags.includes(tag)) {
-			const newUserSettings = this.state.userSettings;
-			newUserSettings.tags.push(tag.toLowerCase());
-			newUserSettings.tags = this.unique(newUserSettings.tags);
-			this.setState({userSettings: newUserSettings});
-			putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })
+			newUserSettings.tags.unshift(tag.toLowerCase());
 			this.state.ws.json({ type: 'follow_tag', data: {'name': tag}});
 		}
+		this.setState({userSettings: newUserSettings});
+		putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })	
 	};
 	unFollowTag = (tagRaw) => {
 		const tag = tagRaw.toLowerCase();
 		const newUserSettings = this.state.userSettings;
+		newUserSettings.tags = this.unique(newUserSettings.tags.map(tag => tag.toLowerCase()));
 		if (newUserSettings.tags.includes(tag)) {
-			const newUserSettings = this.state.userSettings;
-			newUserSettings.tags = this.unique(newUserSettings.tags);
 			// remove string from array
-			newUserSettings.tags = newUserSettings.tags.filter(e => e !== tag.toLowerCase());
-			this.setState({userSettings: newUserSettings});
-			putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })
+			newUserSettings.tags = newUserSettings.tags.filter(e => e !== tag);
 			this.state.ws.json({ type: 'unfollow_tag', data: {'name': tag}});
 		}
+		// else{
+		// 	console.log('etiket yok, bug: ', tag, newUserSettings.tags)
+		// }
+		this.setState({userSettings: newUserSettings});
+		putFile(`${this.state.user.identityAddress}-profile.json`, JSON.stringify(newUserSettings), { encrypt: true })
+		
 	};
 	sortFeedsByRank = () => {
 		let { feeds } = this.state;

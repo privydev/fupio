@@ -1,8 +1,12 @@
 import { h, Component } from 'preact';
+import {route} from 'preact-router';
 
 export default class TagLink extends Component {
 	constructor(props){
         super(props)
+        this.state = {
+            title: this.props.title || "link"
+        }
     }
 	handleTagRoute = (e) => {
         
@@ -17,12 +21,14 @@ export default class TagLink extends Component {
         // Scroll to top
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
+        route(this.props.href)
     }
-	render({href, title}) {
+	render({title},{href}) {
         return (
-            <a class="tag" onClick={this.handleTagRoute.bind()} href={href} title={title}>
-                {title}
-            </a>
+            <span onClick={this.handleTagRoute} href={href} title={title} style="cursor: pointer">
+                {this.props.children ? this.props.children : title}
+            </span>
         )
 	}
 }

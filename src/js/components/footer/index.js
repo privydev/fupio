@@ -55,8 +55,6 @@ export default class Footer extends Component {
 							<li><Link href="/page/tos">Terms of Use</Link></li>
 							<li><Link href="/page/disclaimers">Disclaimers</Link></li>
 							<li><Link href="/page/faq">FAQ</Link></li>
-							
-							
 						</ul>
 					</div>
 					<div class="col">
@@ -81,8 +79,7 @@ export default class Footer extends Component {
 							</ul>
 						</div>
 					}
-					{/* TODO: codeConfirmed related with the invitation code. it will be deleted.  */}
-					{!this.props.user && this.props.codeConfirmed &&
+					{!this.props.user && 
 						<div class="col">
 							<h3>Navigation</h3>
 							<ul>

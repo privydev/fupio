@@ -10,7 +10,7 @@ export default class Default extends Component {
 		return (
             <div class="onboarding feed text-center">
 				{suggested.map((tag) => (
-					<TagButton tag={tag} {...this.props} />
+					<TagButton tag={tag.toLowerCase()} {...this.props} />
 				))}
 			</div>
         );

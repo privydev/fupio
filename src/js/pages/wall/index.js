@@ -12,18 +12,23 @@ export default class Wall extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
+			init: null,
 			slug: decodeURIComponent(window.location.pathname).slice(1).trim().toLocaleLowerCase()
 		}
 	}
+	componentDidMount(){
+		this.setState({init: false});
+	}
 	componentDidUpdate(){
 		if( this.props.wsConnected && this.props.ws && this.props.userSettings.tags.length > this.props.tagCount && 
-			this.props.profileLoaded && !this.state.wallLoad){
-				this.setState({wallLoad: true});
+			this.props.profileLoaded && !this.state.init){
+				this.setState({init: true});
 				this.loadWall();
 		}
 	}
 	loadWall = () => {
 		let tags = [ this.state.slug ];
+		// if it's a homepage
 		if (window.location.pathname.length <= 1) {
 			tags = this.props.userSettings.tags
 		}
@@ -38,24 +43,20 @@ export default class Wall extends Component {
 				<div class="container">
 					<div class="wall" style={`min-height: ${(window.innerHeight)/7*5}px;`}>
 						{isLoading && <div id="loaderBox"><Loading /></div>}
-						
 						{userSettings.tags.length <= tagCount && profileLoaded &&
 							<div>
 								<h3>Follow at least <strong>7</strong> tags which you interests.</h3>
 								<Onboarding {...this.props} />
 							</div>
 						}
-
 						{user && user.username && wsConnected && window.location.pathname.length > 1 && 
 							<div class="text-center" style="margin-bottom: 1em">
-								<TagButton tag={this.state.slug} {...this.props} />
+								<TagButton {...this.props} tag={this.state.slug} />
 							</div>
 						}
-						
 						{user && user.username && wsConnected && userSettings.tags.length > tagCount && 
 							<CreateFeed {...this.props} />
 						}
-						
 						{user && !user.username && 
 							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
 								<content>
@@ -68,7 +69,6 @@ export default class Wall extends Component {
 								</content>
 							</div>
 						}
-						
 						{feeds.map(
 							feed => <Feed {...feed} {...this.props} />
 						)}
@@ -88,15 +88,6 @@ export default class Wall extends Component {
 								</div>
 							}
 						</div>
-						
-
-						{/* {Object.keys(this.props.feeds).length == 0 && 
-							<div class="feed text-center" style="min-height: 0.2em;font-size:0.8em">
-								<content>
-									Seems like this no one created a feed with this tag yet.
-								</content>
-							</div>
-						} */}
 					</div>
 					<Footer {...this.props} />
 				</div>
