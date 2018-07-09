@@ -1,8 +1,8 @@
 {
-  "name": "crux",
-  "version": "1.0.0",
-  "description": "Preact/Gulp/Rollup Starter",
-  "author": "Eli Smith <dwightsmth@gmail.com> (imelismith.github.io)",
+  "name": "fupio",
+  "version": "0.1.0",
+  "description": "Dead simple decentralized microblogging application.",
+  "author": "Mehmet Kose <mehmetkose122@gmail.com> (mehmetkose.github.io)",
   "license": "MIT",
   "gulp_config": {
     "server_port": 8080,
@@ -46,14 +46,6 @@
     "rucksack-css": "^0.9.1"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "blockstack": "^0.17.1",
-    "javascript-time-ago": "^1.0.30",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-router-dom": "^4.2.2",
-    "sockette": "^2.0.0"
-=======
     "browser-image-resizer": "^1.1.4",
     "hot-ranking": "^1.0.0",
     "preact": "^8.2.0",
@@ -66,14 +58,10 @@
   "keywords": [
     "preact",
     "gulp",
-    "starter",
-    "boilerplate",
-    "babel",
-    "rollup"
+    "fupio"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/imelismith/crux"
->>>>>>> release/public_beta
+    "url": "https://github.com/fupio/fupio"
   }
 }
