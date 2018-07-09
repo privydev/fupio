@@ -3,7 +3,7 @@
 > Dead simple microblogging application based on Blockstack project.
 
 ## Get Started
-1. **Clone the repository**. `git clone https://github.com/mehmetkose/fupio.git`.
+1. **Clone the repository**. `git clone https://github.com/fupio/fupio.git`.
 2. **Run yarn or npm install**. `yarn or npm i`.
 3. **Run the app**. `gulp`.
 
