@@ -39,7 +39,6 @@ export default class Wall extends Component {
  		return (
 			<div>
 				<Header {...this.props} />
-				
 				<div class="container">
 					<div class="wall" style={`min-height: ${(window.innerHeight)/7*5}px;`}>
 						{isLoading && <div id="loaderBox"><Loading /></div>}

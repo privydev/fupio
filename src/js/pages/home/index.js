@@ -8,8 +8,6 @@ const { redirectToSignIn } = window.blockstack;
 export default class Default extends Component {
 	constructor(props){
 		super(props)
-		this.state = {
-		}
 	}
 	handleSignIn = (e) => {
 		e.preventDefault();

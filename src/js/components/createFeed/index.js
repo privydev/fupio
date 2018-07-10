@@ -38,7 +38,8 @@ export default class CreateFeed extends Component {
             this.saveFeed(feed);
             this.saveRelation(feed);
             this.setState({tags:[], text:"", image: null})
-        } else {
+        }
+        else {
             alert("Need to put one tag at least")
         }
     }

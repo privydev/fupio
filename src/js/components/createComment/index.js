@@ -18,12 +18,12 @@ export default class CreateComment extends Component {
             identity: this.props.user.identityAddress,
             feedId: `${this.props.created}-${this.props.identity}`
         };
-        this.setState({ text: "" })
+        this.setState({ text: "" });
         const commentFile = `${this.props.created}-${this.props.identity}-${comment.created}.json`;
         const options = { username: this.props.username, app: this.props.address, decrypt: false };
         putFile(commentFile, JSON.stringify(comment), options).then(() => {
             this.props.ws.json({ type: 'add_comment', data: comment });
-        })
+        });
         // if (!this.props.feeds[comment.feedId].comments){
         //     this.props.feeds[comment.feedId].comments = []
         // }

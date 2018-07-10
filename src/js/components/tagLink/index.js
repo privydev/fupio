@@ -9,15 +9,17 @@ export default class TagLink extends Component {
         }
     }
 	handleTagRoute = (e) => {
-        
         this.props.updateMainState({ feeds: [] });
-        if(this.props.href == "/"){
-            this.props.ws.json({type: 'load_feeds', data: {'tags': this.props.userSettings.tags}});
+        try {
+            if(this.props.href == "/"){
+                this.props.ws.json({type: 'load_feeds', data: {'tags': this.props.userSettings.tags}});
+            }
+            else {
+                this.props.ws.json({type: 'load_feeds', data: {'tags': [this.props.title.toLowerCase()]}});
+            } 
+        } catch (error) {
+            console.log(error)
         }
-		else {
-            this.props.ws.json({type: 'load_feeds', data: {'tags': [this.props.title.toLowerCase()]}});
-        }
-        
         // Scroll to top
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera

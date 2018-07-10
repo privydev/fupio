@@ -197,9 +197,11 @@ export default class App extends Component {
 		const feed = this.getFeed(created, identity);
 		if (feed) {
 			if (!feed.comments) {
-				feed.comments = []
+				feed.comments = [];
 			}
-			feed.comments.push(comment);
+			if (!feed.comments.map(comment => comment.created).includes(comment.created)) {
+				feed.comments.push(comment);
+			}
 			// re-calculate the rank if the created bigger
 			if (comment.updated > feed.updated) {
 				feed.updated = comment.updated;

@@ -6,5 +6,8 @@
     "src": "http://fupio.com/icon-192x192.png",
     "sizes": "192x192",
     "type": "image/png"
-  }]
+  }],
+  "display": "standalone",
+  "background_color": "#9bd6b8",
+  "theme_color": "#9bd6b8"
 }

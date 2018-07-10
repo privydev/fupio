@@ -7,27 +7,24 @@ export default class Footer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			suggested: this.props.suggested
 		}
 	}
 	shouldComponentUpdate(){
 		return false;
 	}
-	shuffle(a) {
-		for (let i = a.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[a[i], a[j]] = [a[j], a[i]];
-		}
-		return a;
-	}
-	titleCase(str) {
-		return str.toLowerCase().split(' ').map(function(word) {
-		  return word.replace(word[0], word[0].toUpperCase());
-		}).join(' ');
-	}
+	// shuffle(a) {
+	// 	for (let i = a.length - 1; i > 0; i--) {
+	// 		const j = Math.floor(Math.random() * (i + 1));
+	// 		[a[i], a[j]] = [a[j], a[i]];
+	// 	}
+	// 	return a;
+	// }
+	// titleCase(str) {
+	// 	return str.toLowerCase().split(' ').map(function(word) {
+	// 	  return word.replace(word[0], word[0].toUpperCase());
+	// 	}).join(' ');
+	// }
 	render() {
-		const { handleSignOut } = this.props;
-		const { suggested } = this.state;
 		return (
 			<footer class="footer">
 				<div class="row">
@@ -57,14 +54,20 @@ export default class Footer extends Component {
 							<li><Link href="/page/faq">FAQ</Link></li>
 						</ul>
 					</div>
+					{this.props.ws &&
 					<div class="col">
 						<h3>Tags</h3>
 						<ul>
-						{suggested && suggested.slice(0, 5).map((tag) => (
-							<li><TagLink href={`/${tag}`} title={this.titleCase(tag)} {...this.props} /></li>
-						))}
+							{this.props.suggested && this.props.suggested.slice(0, 5).map((tag) => (
+								<li>
+									<TagLink href={`/${tag}`} title={tag} {...this.props}>
+										<span>{tag}</span>
+									</TagLink>
+								</li>
+							))}
 						</ul>
 					</div>
+					}
 					{this.props.user &&
 						<div class="col">
 							<h3>Navigation</h3>
