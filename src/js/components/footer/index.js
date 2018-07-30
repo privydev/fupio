@@ -39,59 +39,41 @@ export default class Footer extends Component {
 							<li><Link href="/page/rules">Rules</Link></li>
 							<li><Link href="/page/about">About</Link></li>
 							<li><Link href="/page/team">Team</Link></li>
-							<li><a target="_blank" href="https://github.com/fupio">Github</a></li>
-							<li><a target="_blank" href="https://speakerdeck.com/mehmetkose/fupio-a-decentralized-microblogging-application">Presentation</a></li>
-							<li><a target="_blank" href="https://t.me/joinchat/BeM0LwwdJkoIBbkketDfCw">Telegram</a></li>
+							
 						</ul>
+					</div>
+					<div class="col">
+							<h3>Links</h3>
+							<ul>
+								<li><a target="_blank" href="https://github.com/fupio">Github</a></li>
+								<li><a target="_blank" href="https://speakerdeck.com/mehmetkose/fupio-a-decentralized-microblogging-application">Presentation</a></li>
+								<li><a target="_blank" href="https://t.me/joinchat/BeM0LwwdJkoIBbkketDfCw">Telegram</a></li>
+							</ul>
 					</div>
 					<div class="col">
 						<h3>Resources</h3>
 						<ul>
-							<li><Link href="/page/branding">Branding</Link></li>
 							<li><Link href="/page/privacy">Privacy Policy</Link></li>
 							<li><Link href="/page/tos">Terms of Use</Link></li>
-							<li><Link href="/page/disclaimers">Disclaimers</Link></li>
 							<li><Link href="/page/faq">FAQ</Link></li>
+							<li><Link href="/page/branding">Branding</Link></li>
 						</ul>
 					</div>
 					{this.props.ws &&
-					<div class="col">
-						<h3>Tags</h3>
-						<ul>
-							{this.props.suggested && this.props.suggested.slice(0, 5).map((tag) => (
-								<li>
-									<TagLink href={`/${tag}`} title={tag} {...this.props}>
-										<span>{tag}</span>
-									</TagLink>
-								</li>
-							))}
-						</ul>
-					</div>
-					}
-					{this.props.user &&
 						<div class="col">
-							<h3>Navigation</h3>
+							<h3>Tags</h3>
 							<ul>
-									<nav>
-										<li><TagLink href="/" title="Home" {...this.props} /></li>
-										{/* <li><Link href="/user/discussion">Discussion</Link></li>
-										<li><Link href="/user/discussion">Discussion</Link></li>
-										<li><Link href="/user/settings">Settings</Link></li> */}
-										<li><Link href="#" onClick={ () => this.props.handleSignOut.bind() }>Logout</Link></li>
-									</nav>
+								{this.props.suggested && this.props.suggested.slice(0, 5).map((tag) => (
+									<li>
+										<TagLink href={`/${tag}`} title={tag} {...this.props}>
+											<span>{tag}</span>
+										</TagLink>
+									</li>
+								))}
 							</ul>
 						</div>
 					}
-					{!this.props.user && 
-						<div class="col">
-							<h3>Navigation</h3>
-							<ul>
-								<nav>
-									<li><Link href="#" onClick={ () => this.props.handleSignIn.bind() }>login</Link></li>
-								</nav>
-							</ul>
-						</div>
-					}
+					
 				</div>
 			</footer>
 		);

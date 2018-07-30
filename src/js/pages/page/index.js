@@ -4,7 +4,6 @@ import Markdown from 'preact-markdown';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 
-
 export default class Default extends Component {
     constructor(props) {
 		super(props);
@@ -29,7 +28,9 @@ export default class Default extends Component {
 	}
 	loadContent() {
 		const page_content = this.state.content[this.props.page_slug];
-		this.setState({title: page_content.title, body: page_content.body})
+		if (page_content) {
+			this.setState({title: page_content.title, body: page_content.body});
+		}
 	}
 	render({}, {title, body}) {
 		return (
@@ -39,7 +40,7 @@ export default class Default extends Component {
 					<div class="wall page" style={`min-height: ${(window.innerHeight)/7*5}px;`}>
 						<hr />
 						<h1>{title}</h1>
-						{this.state.body.map(line => <Markdown markdown={line} />)}
+						{body.map(line => <Markdown markdown={line} />)}
 					</div>
 					<Footer {...this.props} />
 				</div>

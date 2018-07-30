@@ -10,7 +10,7 @@ export default class Default extends Component {
 		this.state = {
 		}
 	}
-	render({user, suggested}, {}) {
+	render({user}, {}) {
 		return (
 			<div>
 				<Header {...this.props} />
@@ -34,7 +34,6 @@ export default class Default extends Component {
 								</Link>
 							</div>
 							<div class="col">
-								
 							</div>
 						</div>
 					</div>

@@ -28,7 +28,7 @@ export default class Wall extends Component {
 	}
 	loadWall = () => {
 		let tags = [ this.state.slug ];
-		// if it's a homepage
+		// if it is the homepage
 		if (window.location.pathname.length <= 1) {
 			tags = this.props.userSettings.tags
 		}
