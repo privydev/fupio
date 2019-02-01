@@ -1,4 +1,4 @@
-# private_beta: v0.1
+# v0.1.0
 
 * blockstack auth: login/logout
 * websocket pub/sub to the orion8
@@ -8,3 +8,8 @@
 * search component in header
 * tag component (3 functions, follow, unfollow, go to the tag)
 * comments (can comment, comment list, hide some comments if more then 3)
+
+# v0.2.0
+
+* work with orion8 blockchain
+* bug fixes
