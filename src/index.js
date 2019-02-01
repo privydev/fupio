@@ -74,15 +74,15 @@ export default class App extends Component {
 	componentDidUpdate() {
 		// if user logged in but profile not loaded
 		if (this.state.user && this.state.profileLoaded == false && this.state.isLoading == false) {
-			this.loadProfile();
+			setTimeout(this.loadProfile(), 100);
 		}
 		// if profile loaded but WS not connected
 		else if (isUserSignedIn() && !this.state.ws && this.state.profileLoaded == true && this.state.isLoading == false) {
 			if (window.location.origin.includes('localhost')) {
-				this.initConnection("ws://localhost:5000");
+				setTimeout(this.initConnection("ws://localhost:5000"), 200);
 			}
 			else {
-				this.initConnection();
+				setTimeout(this.initConnection(), 200);
 			}
 		}
 		
