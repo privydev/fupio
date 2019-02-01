@@ -1,0 +1,13 @@
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+
+export default config => {
+    config.plugins.push( new CopyWebpackPlugin([{ context: `${__dirname}/src/assets`, from: `*.*` }]) );
+	
+	config.devServer = {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+		}
+	};
+}

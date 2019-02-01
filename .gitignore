@@ -4,7 +4,7 @@ dist
 .DS_Store
 *.map
 *.log
-conf/orion8.*
+*.lock
+.firebase/
+package-lock.json
 
-# Coverage used by instanbul
-coverage

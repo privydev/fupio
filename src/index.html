@@ -1,31 +1,69 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Fupio</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <style type="text/css">body{background:#9bd6b8;}</style>
-    <style>
-      <!--...............................
-      ..._____................__.........
-      ._/.____\__.__.______..|__|..____..
-      .\...__\|..|..\\____.\.|..|./.._.\.
-      ..|..|..|..|../|..|_).||..|(..(_).)
-      ..|__|..|____/.|...__/.|__|.\____/.
-      ...............|__|................
-      ................................-->
-    </style>
-    <link rel="icon" type="image/ico" href="data:image/ico;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABMLAAATCwAAAAAAAAAAAAC51pz/uNac/7nWnP+41pz/uNac/7jWnP+41pz/uNac/7jWnP+41pz/uNac/7jWnP+41pz/udac/7jWm/+6153/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/udec/7nWnP+41pv/uNab/7fUmv+21Jn/ttSa/7fVm/+41pz/uNac/7fVm/+21Jr/ttSZ/7fVmv+41pv/uNab/7nXnf+41pz/uNab/7rYnf+/36L/xOKk/8Ddn/+715r/uNSY/7jUmP+715r/wd6g/8PipP++3aH/udec/7jWm/+5153/udec/7jWnP+wzJT/kKd3/2+HYf9ti2r/ep56/4Oph/+CqYf/eJx6/22MZv92jWT/mrF+/7TRmP+415z/uted/7XSmf+jvYf/eZJp/2yPev+KsbH/nb/Y/4ai4/+Lpef/iKHm/4yn4f+Ep8//eqWm/2yRdf+Cmm7/qsSN/7bUm/+205f/pMaW/6PIzP+MpPD/XWfm/z5A1P8oJsT/IyPP/yop0f8zMtP/ODne/2Fq7P+Jpez/mcO9/6HCjf+405n/sdOe/63Q2/9bYOn/KCbU/y4tx/83N9D/Q0PO/0BAz/86O8z/NTbO/zMzxf8rKs//LCjP/2Nr7/+s0dH/s9SZ/7Hbx/96hOv/LSrd/0pK4/9RUOP/XFvr/2Jh7f9dXOr/V1Xr/09O6/9IR9b/QUHO/zs8xv8pJdX/hJPs/7Pduf+43OD/cnPq/0tI7P9RTu//VVDy/1NO8f9cWPD/XVrt/2Rk5v9dXOn/Tkry/0xH6/9EP9n/QT3p/2Ff8f+y1dz/vdmm/7PNpP+nv6v/pr2v/6Czt/+Zqb7/orW4/67Gq/+yzaH/r8ml/6W6sf+crrz/i5fL/4SL1v+QmNT/y+Dk/7fWmf+52Jn/vNuY/7zbl/+93Zb/vt6V/7zclv+62pj/utiZ/7rZmf+83Jf/vd2V/77elf+93Zf/vNyW/73aov+51pz/uNWb/7fVnP+31Zz/t9Sc/7fUnP+31Zz/t9Wc/7jVm/+31Zz/t9Wc/7fUnP+31Jz/t9Sc/7fVnP+41pv/udac/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uded/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7jWm/+41pv/uNab/7nXnP+515z/udac/7nWnP+51pz/udac/7nWnP+51pz/udac/7nWnP+51pz/udac/7nWnP+51pz/udac/7jWnP+6153/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" />
-  </head>
-  <body>
-    <div id="root"></div>
-    
-    <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded",function(t){
-        var e=c.width=500,i=c.height=500,s=c.getContext("2d"),n={range:180,baseConnections:3,addedConnections:5,baseSize:5,minSize:1,dataToConnectionSize:.4,sizeMultiplier:.7,allowedDist:40,baseDist:40,addedDist:30,connectionAttempts:100,dataToConnections:1,baseSpeed:.04,addedSpeed:.05,baseGlowSpeed:.4,addedGlowSpeed:.4,rotVelX:.003,rotVelY:.002,repaintColor:"#9bd6b8",connectionColor:"hsla(200,60%,light%,alp)",rootColor:"hsla(0,60%,light%,alp)",endColor:"hsla(160,20%,light%,alp)",dataColor:"hsla(40,80%,light%,alp)",wireframeWidth:.1,wireframeColor:"#88f",depth:250,focalLength:250,vanishPoint:{x:e/2,y:i/2}},o=n.range*n.range,h=n.allowedDist*n.allowedDist,r=n.depth+n.range,l=sinY=0,a=cosY=0,d=[],p=[],f=[],g=[],y=0,z=!1,x=2*Math.PI;function u(t,e,i,s){this.x=t,this.y=e,this.z=i,this.size=s,this.screen={},this.links=[],this.probabilities=[],this.isEnd=!1,this.glowSpeed=n.baseGlowSpeed+n.addedGlowSpeed*Math.random()}function w(t){this.glowSpeed=n.baseGlowSpeed+n.addedGlowSpeed*Math.random(),this.speed=n.baseSpeed+n.addedSpeed*Math.random(),this.screen={},this.setConnection(t)}function C(t,e){var i=e.x-t.x,s=e.y-t.y,n=e.z-t.z;return i*i+s*s+n*n}function S(){window.requestAnimationFrame(S),s.globalCompositeOperation="source-over",s.fillStyle=n.repaintColor,s.fillRect(0,0,e,i);var t=++y*n.rotVelX,o=y*n.rotVelY;if(a=Math.cos(t),l=Math.sin(t),cosY=Math.cos(o),sinY=Math.sin(o),f.length<d.length*n.dataToConnections){var h=new w(d[0]);f.push(h),g.push(h)}s.globalCompositeOperation="lighter",s.beginPath(),s.lineWidth=n.wireframeWidth,s.strokeStyle=n.wireframeColor,g.map(function(t){t.step()}),s.stroke(),s.globalCompositeOperation="source-over",g.sort(function(t,e){return e.screen.z-t.screen.z}),g.map(function(t){t.draw()})}s.fillStyle="#9bd6b8",s.fillRect(0,0,e,i),s.fillStyle="#ccc",s.font="50px Verdana",s.fillText("Calculating Nodes",e/2-s.measureText("Calculating Nodes").width/2,i/2-15),window.setTimeout(function(){d.length=0,f.length=0,g.length=0,p.length=0;var t=new u(0,0,0,n.baseSize);t.step=u.rootStep,d.push(t),g.push(t),t.link();for(;p.length>0;)p[0].link(),p.shift();z||(z=!0,S())},4),u.prototype.link=function(){if(this.size<n.minSize)return this.isEnd=!0;for(var t,e,i,s,r,l,a,c,f,y=[],z=n.baseConnections+Math.random()*n.addedConnections|0,w=n.connectionAttempts,S={};y.length<z&&--w>0;)if(t=Math.random()*Math.PI,e=Math.random()*x,i=n.baseDist+n.addedDist*Math.random(),s=Math.cos(t),r=Math.sin(t),l=Math.cos(e),a=Math.sin(e),S.x=this.x+i*s*a,S.y=this.y+i*r*a,S.z=this.z+i*l,S.x*S.x+S.y*S.y+S.z*S.z<o){c=!0,f=!0;for(var m=0;m<d.length;++m)C(S,d[m])<h&&(c=!1);if(c)for(m=0;m<y.length;++m)C(S,y[m])<h&&(f=!1);c&&f&&y.push({x:S.x,y:S.y,z:S.z})}if(0===y.length)this.isEnd=!0;else{for(m=0;m<y.length;++m){var v=new u((S=y[m]).x,S.y,S.z,this.size*n.sizeMultiplier);this.links[m]=v,g.push(v),d.push(v)}for(m=0;m<this.links.length;++m)p.push(this.links[m])}},u.prototype.step=function(){this.setScreen(),this.screen.color=(this.isEnd?n.endColor:n.connectionColor).replace("light",30+y*this.glowSpeed%30).replace("alp",.2+.8*(1-this.screen.z/r));for(var t=0;t<this.links.length;++t)s.moveTo(this.screen.x,this.screen.y),s.lineTo(this.links[t].screen.x,this.links[t].screen.y)},u.rootStep=function(){this.setScreen(),this.screen.color=n.rootColor.replace("light",30+y*this.glowSpeed%30).replace("alp",.8*(1-this.screen.z/r));for(var t=0;t<this.links.length;++t)s.moveTo(this.screen.x,this.screen.y),s.lineTo(this.links[t].screen.x,this.links[t].screen.y)},u.prototype.draw=function(){s.fillStyle=this.screen.color,s.beginPath(),s.arc(this.screen.x,this.screen.y,this.screen.scale*this.size,0,x),s.fill()},w.prototype.reset=function(){this.setConnection(d[0]),this.ended=2},w.prototype.step=function(){this.proportion+=this.speed,this.proportion<1?(this.x=this.ox+this.dx*this.proportion,this.y=this.oy+this.dy*this.proportion,this.z=this.oz+this.dz*this.proportion,this.size=(this.os+this.ds*this.proportion)*n.dataToConnectionSize):this.setConnection(this.nextConnection),this.screen.lastX=this.screen.x,this.screen.lastY=this.screen.y,this.setScreen(),this.screen.color=n.dataColor.replace("light",40+y*this.glowSpeed%50).replace("alp",.2+.6*(1-this.screen.z/r))},w.prototype.draw=function(){if(this.ended)return--this.ended;s.beginPath(),s.strokeStyle=this.screen.color,s.lineWidth=this.size*this.screen.scale,s.moveTo(this.screen.lastX,this.screen.lastY),s.lineTo(this.screen.x,this.screen.y),s.stroke()},w.prototype.setConnection=function(t){t.isEnd?this.reset():(this.connection=t,this.nextConnection=t.links[t.links.length*Math.random()|0],this.ox=t.x,this.oy=t.y,this.oz=t.z,this.os=t.size,this.nx=this.nextConnection.x,this.ny=this.nextConnection.y,this.nz=this.nextConnection.z,this.ns=this.nextConnection.size,this.dx=this.nx-this.ox,this.dy=this.ny-this.oy,this.dz=this.nz-this.oz,this.ds=this.ns-this.os,this.proportion=0)},u.prototype.setScreen=w.prototype.setScreen=function(){var t=this.x,e=this.y,i=this.z,s=e;e=e*a-i*l;var o=i=i*a+s*l;i=i*cosY-t*sinY,t=t*cosY+o*sinY,this.screen.z=i,i+=n.depth,this.screen.scale=n.focalLength/i,this.screen.x=n.vanishPoint.x+t*this.screen.scale,this.screen.y=n.vanishPoint.y+e*this.screen.scale}}),window.addEventListener("resize",function(){opts.vanishPoint.x=(w=c.width=window.innerWidth)/2,opts.vanishPoint.y=(h=c.height=window.innerHeight)/2,ctx.fillRect(0,0,w,h)
-      });
-    </script>
-    
-  </body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title><%= htmlWebpackPlugin.options.title %></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<style>
+			<!--...............................
+			..._____................__.........
+			._/.____\__.__.______..|__|..____..
+			.\...__\|..|..\\____.\.|..|./.._.\.
+			..|..|..|..|../|..|_).||..|(..(_).)
+			..|__|..|____/.|...__/.|__|.\____/.
+			...............|__|................
+			................................-->
+		</style>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="robots" content="index">
+		<meta name="description" content="The temporary autonomous zone for people who want to freedom. Socializing through tags. Based on orion8 blockchain and Blockstack.">
+		<meta name="application-name" content="Fupio">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
+		<meta name="theme-color" content="#9bd6b8"/>
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="//fupio.com" />
+		<meta property="og:image" content="https://fupio.com/icon-192x192.png" />
+		<link href="/manifest.json" rel="manifest" />
+		<link rel="icon" type="image/png" sizes="192x192" href="//fupio.com/icon-192x192.png">
+		<link rel="shortcut icon" href="//fupio.com/favicon.ico">
+		<link rel="dns-prefetch" href="//gaia.blockstack.org">
+		<link rel="dns-prefetch" href="//hub.blockstack.org">
+		<link rel="dns-prefetch" href="//orion8.herokuapp.com">
+		<link rel="preconnect" href="//gaia.blockstack.org">
+		<link rel="preconnect" href="//hub.blockstack.org">
+		<link rel="canonical" href="https://fupio.com" />
+		<style type="text/css">body{background:#9bd6b8}</style>
+		
+		<% if (htmlWebpackPlugin.options.manifest.theme_color) { %>
+			<meta name="theme-color" content="<%= htmlWebpackPlugin.options.manifest.theme_color %>">
+		<% } %>
+		<% for (var chunk of webpack.chunks) { %>
+		 <% if (chunk.names.length === 1 && chunk.names[0] === 'polyfills') continue; %>
+			<% for (var file of chunk.files) { %>
+				<% if (htmlWebpackPlugin.options.preload && file.match(/\.(js|css)$/)) { %>
+					<link rel="preload" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
+				<% } else if (file.match(/manifest\.json$/)) { %>
+					<link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath + file %>">
+				<% } %>
+			<% } %>
+		<% } %>
+	</head>
+	<body>
+		<%= htmlWebpackPlugin.options.ssr({
+			url: '/'
+		}) %>
+		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
+		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
+		<noscript>JavaScript disabled on your browser.</noscript>
+		<script src="/assets/blockstack.min.js"></script>
+
+
+		<script src="//cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
+		<script>
+				Raven.config('https://edf8036ce652450e9fa3a51092e65ffd@sentry.io/1235375').install();
+		</script>
+	</body>
 </html>

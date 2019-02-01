@@ -1,67 +1,74 @@
 {
   "name": "fupio",
-  "version": "0.1.0",
-  "description": "Dead simple decentralized microblogging application.",
-  "author": "Mehmet Kose <mehmetkose122@gmail.com> (mehmetkose.github.io)",
+  "version": "0.2.0",
   "license": "MIT",
-  "gulp_config": {
-    "server_port": 8080,
-    "src_path": "./src",
-    "build_path": "./dist",
-    "build_name": "Fupio"
-  },
   "scripts": {
-    "lint": "NODE_ENV=test ./node_modules/.bin/gulp lint",
-    "test": "NODE_ENV=test ./node_modules/.bin/gulp test",
-    "dev": "NODE_ENV=development ./node_modules/.bin/gulp",
-    "build": "NODE_ENV=production ./node_modules/.bin/gulp"
+    "start": "per-env",
+    "start:production": "npm run -s serve",
+    "start:development": "npm run -s dev",
+    "build": "preact build --no-prerender --template src/index.html",
+    "serve": "preact build --no-prerender && preact serve --template src/index.html",
+    "dev": "preact watch --https --template src/index.html",
+    "deploy": "yarn build && firebase deploy --only hosting",
+    "lint": "eslint src",
+    "test": "jest"
   },
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
   "devDependencies": {
-    "autoprefixer": "^6.5.3",
-    "babel-core": "^6.20.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-react-jsx": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-1": "^6.24.1",
-    "browser-sync": "^2.18.2",
-    "cssnano": "^3.10.0",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-changed": "^2.0.0",
-    "gulp-file-include": "^1.0.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^3.1.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^6.3.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.4.1",
-    "node-notifier": "^5.0.2",
-    "rollup": "^0.41.4",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-commonjs": "^7.0.0",
-    "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-replace": "^1.1.1",
-    "rollup-plugin-uglify": "^1.0.1",
-    "rucksack-css": "^0.9.1"
+    "copy-webpack-plugin": "^4.6.0",
+    "eslint": "^4.9.0",
+    "eslint-config-synacor": "^2.0.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^21.2.1",
+    "node-sass": "^4.11.0",
+    "per-env": "^1.0.2",
+    "preact-cli": "^2.1.0",
+    "preact-render-spy": "^1.2.1",
+    "sass-loader": "^7.1.0"
   },
   "dependencies": {
-    "browser-image-resizer": "^1.1.4",
+    "browser-image-resizer": "^1.2.0",
     "hot-ranking": "^1.0.0",
-    "preact": "^8.2.0",
-    "preact-markdown": "^0.4.0",
-    "preact-router": "^2.6.1",
+    "preact-compat": "^3.17.0",
+    "preact-markdown": "^0.4.1",
+    "preact-router": "^2.5.7",
     "preact-timeago": "github:fupio/preact-timeago",
     "preact-token-input": "^0.3.0",
-    "sockette": "^2.0.0"
+    "sanitize-filename": "^1.6.1",
+    "sockette": "^2.0.5"
   },
-  "keywords": [
-    "preact",
-    "gulp",
-    "fupio"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/fupio/fupio"
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/tests/__mocks__/browserMocks.js"
+    ],
+    "testRegex": "(/(__tests__|tests)/.*|(\\.|/)(test|spec))\\.jsx?$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/tests/__mocks__/*"
+    ],
+    "testURL": "http://localhost:8080",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "identity-obj-proxy",
+      "^./style$": "identity-obj-proxy",
+      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat",
+      "^create-react-class$": "preact-compat/lib/create-react-class",
+      "^react-addons-css-transition-group$": "preact-css-transition-group"
+    }
   }
 }

@@ -1,9 +1,9 @@
 {
-    "presets": [
-        ["env", { "modules": false }], "stage-1"
-    ],
-    "plugins": [
-        ["transform-react-jsx", { "pragma": "h"}],
-        "external-helpers"
-  ]
+  "env": {
+    "test": {
+      "presets": [
+        ["preact-cli/babel", { "modules": "commonjs" }]
+      ]
+    }
+  }
 }

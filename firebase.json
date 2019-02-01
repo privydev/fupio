@@ -1,0 +1,61 @@
+{
+    "hosting": {
+      "public": "build",
+      "headers": [ 
+          { "source" : "**",
+            "headers" : [ 
+                {
+                  "key" : "Access-Control-Allow-Origin",
+                  "value" : "*"
+                },
+                {
+                  "key" : "Access-Control-Allow-Headers",
+                  "value" : "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
+                },
+                {
+                  "key" : "Access-Control-Allow-Methods",
+                  "value" : "POST, GET, OPTIONS, DELETE, PUT"
+                }
+            ]
+          },
+          { 
+            "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+            "headers" : [ {
+                  "key" : "Access-Control-Allow-Origin",
+                  "value" : "*"
+            } ]
+          },
+          {
+            "source" : "/assets/blockstack.min.js",
+            "headers" : [ {
+                 "key" : "Cache-Control",
+                 "value" : "max-age=7200"
+            } ]
+          },
+          { 
+            "source" : "**/*.@(jpg|jpeg|gif|png)",
+            "headers" : [ {
+                  "key" : "Cache-Control",
+                  "value" : "max-age=7200"
+            } ]
+          },
+           { "source" : "404.html",
+            "headers" : [ {
+              "key" : "Cache-Control",
+              "value" : "max-age=300"
+            } ]
+          }
+      ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  }
