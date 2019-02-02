@@ -10,6 +10,7 @@
       form {
         textarea {
           height: 4em;
+          transition: height .9s ease-out;
           
           &:focus {
             height: 8em;

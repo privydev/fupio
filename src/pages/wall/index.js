@@ -53,7 +53,7 @@ export default class Wall extends Component {
 								<TagButton {...this.props} tag={this.state.slug} />
 							</div>
 						}
-						{user && user.username && userSettings.tags.length > tagCount && 
+						{user && user.username && userSettings && userSettings.tags && userSettings.tags.length > tagCount && 
 							<CreateFeed {...this.props} />
 						}
 						{user && !user.username && 
